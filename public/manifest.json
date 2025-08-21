@@ -1,0 +1,29 @@
+{
+  "name": "Quotr",
+  "short_name": "Quotr App",
+  "description": "Empower Your Customers with Instant Print Pricing. Transforming Print Sales Behind the Counter. Quote Faster, Sell More",
+  "theme_color": "#0094de",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "any",
+  "Scope": "/",
+  "start_url": ".",
+  "lang": "en-US",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}

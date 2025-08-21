@@ -1,0 +1,150 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+ 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital&display=swap');
+ 
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-family: "Poppins", sans-serif;
+}
+*{
+  margin: 0  ;
+  padding: 0  ;
+}
+option{
+  padding: 20px !important;
+}
+p{
+padding: 0;
+margin: 0; 
+font-family: "Poppins", sans-serif !important;
+}
+  
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+.fs-16{
+  font-size: 19px;
+}
+.fs-14{
+  font-size: 14px;
+}
+
+.fs-12{
+  font-size: 12px;
+}
+
+
+
+
+/* scroll bar css */ 
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+  border-radius: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1; 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; 
+}
+
+
+Link{
+  text-decoration: none;
+  color: black;
+}
+ 
+
+.homeTopBtn{
+  border-radius: 3px;
+background: #0094DE;
+color: white;
+border: none;
+padding: 5px 10px;
+font-weight: 600;
+font-size:15px;
+margin-top: 20px;
+box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.homeTopBtn:hover{
+  border: 1px solid #0094DE;
+  border-radius: 3px;
+  background: white;
+  color:#0094DE ;
+  border: none;
+  padding: 5px 10px;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 20px;
+  text-wrap: nowrap;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+  }
+  .swal2-actions > button{
+    background-color: #0D6EFD !important;
+  }
+
+
+
+  .form__group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 100%;
+  }
+  
+  .form__field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid black;
+    outline: 0; 
+    color: black;
+    padding: 5px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+  }
+  
+  .form__field::placeholder {
+    color: transparent;
+  }
+  
+  .form__field:placeholder-shown ~ .form__label {
+    cursor: text;
+    top:20px;
+  }
+  
+  .form__label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s; 
+    color: #9b9b9b;
+  }
+  
+  .form__field:focus {
+    padding-bottom: 2px;
+    font-weight: 500;
+    border-width: 2px;
+    border-image: linear-gradient(to right, blue,rgb(35, 35, 253),rgb(79, 79, 252),rgb(120, 120, 255));
+    border-image-slice: 1;
+  }
+  
+  /* reset input */
+  .form__field:required, .form__field:invalid {
+    box-shadow: none;
+  }

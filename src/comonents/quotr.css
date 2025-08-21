@@ -1,0 +1,38 @@
+.heroMobile{
+    /* height: 100vh; */
+}
+.polygon{
+    z-index: 0 !important;
+}
+.HeroMobileImgDiv{
+    /* height: 80vh; */
+}
+.HeroMobileImg{
+    z-index: 3;
+}
+.planCard{
+    background: white;
+    border:1px solid #6dbafb; 
+
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.planCard:hover{
+    background: linear-gradient( 135deg, #91dbfc 15%, #ade2fc 30%, #9bdafc 50% , #6dbafb 75%,#b9e3fb 100%);
+    border:1px solid transparent; 
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.planCard:hover .planCard button{
+    background-color: white;
+    color: #6dbafb ;
+}
+@media(max-width:650px){
+    .heroMobile{
+        height: 100%;
+    }
+    .HeroMobileImgDiv{
+        /* height: 50vh; */
+    }
+}
+ 

@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+  overflow-y: hidden;
+}
+
+.header{
+  position: fixed;
+  width: 100%;
+  background-color: white;
+  z-index: 9999;
+}
+
+
+ 
+ 
+ 
+ 
+ 
