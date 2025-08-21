@@ -281,9 +281,9 @@ const Dashboard = () => {
             <FaTrophy />{" "}
           </p>
           <p class="fs-5 fw-semibold">Plan : {data?.plan_details?.name}</p>
-          <p class="fs-5 fw-semibold">
+          {/* <p class="fs-5 fw-semibold">
             No. of Store : {data?.plan_details?.allow_login}
-          </p>
+          </p> */}
         </div>
       )}
 
@@ -299,7 +299,7 @@ const Dashboard = () => {
               </p>
             </div>
             <div class="mt-3 col-11 m-auto">
-              <p class="fs-5 fw-bold"> Total Order : {data?.tot_order}</p>
+              <p class="fs-5 fw-bold">  Order : {data?.tot_order}</p>
             </div>
           </div>
         </div>
@@ -332,7 +332,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div class="mt-3 col-11 m-auto">
-                <p class="fs-5 fw-bold"> My Store : {data?.tot_users} </p>
+                <p class="fs-5 fw-bold"> Users/Stores : {data?.tot_users} </p>
               </div>
             </div>
           </div>
@@ -350,7 +350,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div class="mt-3 col-11 m-auto">
-                <p class="fs-5 fw-bold">Pricing Markup</p>
+                <p class="fs-5 fw-bold">Price Markup</p>
               </div>
             </div>
           </div>
@@ -367,7 +367,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div class="mt-3 col-11 m-auto">
-                <p class="fs-5 fw-bold"> Shipping Pricing Markup</p>
+                <p class="fs-5 fw-bold"> Shipping Pricing</p>
               </div>
             </div>
           </div>
@@ -384,7 +384,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div class="mt-3 col-11 m-auto">
-                <p class="fs-5 fw-bold">New Order admin</p>
+                <p class="fs-5 fw-bold">New Order</p>
               </div>
             </div>
           </div>

@@ -171,67 +171,96 @@ const ShippingPricingMarkup = () => {
         </div>
         <hr />
 
-        <div class="row align-items-center">
-          <div class="col-md-6 ">
+            <div className="row align-items-center">
+  {/* Store Dropdown */}
+  <div className="col-md-6">
+    <div className="col-11 mt-3 border rounded-4 shadow-sm overflow-hidden">
+      {/* Header */}
+      <div
+        className="p-3 d-flex justify-content-between align-items-center bg-light"
+        data-bs-toggle="collapse"
+        href="#collapseComponyId"
+        role="button"
+        aria-expanded="false"
+        aria-controls="collapseComponyId"
+        style={{ cursor: "pointer" }}
+      >
+        <p className="fs-6 fw-bold mb-0">
+          Store:{" "}
+          {company?.find((el) => el.id === companyId)?.company_name ||
+            "Select Store"}
+        </p>
+        <i className="bi bi-chevron-down text-muted"></i>
+      </div>
+
+      {/* Collapse Content */}
+      <div className="collapse" id="collapseComponyId">
+        <div className="p-2">
+          {company.map((el) => (
             <div
-              class="col-11  border rounded-4 border-primary p-2"
-              data-bs-toggle="collapse"
-              href="#collapseComponyId"
-              role="button"
-              aria-expanded="false"
-              aria-controls="collapseComponyId"
+              key={el.id}
+              className={`p-2 rounded-3 mb-1 border d-flex justify-content-between align-items-center ${
+                companyId === el.id
+                  ? "border-primary bg-primary bg-opacity-10"
+                  : "border-light"
+              }`}
+              style={{ cursor: "pointer", transition: "0.2s" }}
+              onClick={() => {
+                setCompanyId(el.id);
+
+                // Collapse auto-close
+                const collapseEl =
+                  document.getElementById("collapseComponyId");
+                const bsCollapse =
+                  window.bootstrap.Collapse.getOrCreateInstance(collapseEl);
+                bsCollapse.hide();
+              }}
             >
-              <p class="fs-5 fw-bold">
-                {" "}
-                Store :{" "}
-                {company?.find((el) => el.id === companyId)?.company_name}{" "}
-              </p>
-              <div class="collapse" id="collapseComponyId">
-                <div class="card card-body border-0">
-                  {company.map((el) => (
-                    <div
-                      class="p-2 border-bottom"
-                      key={el.id}
-                      onClick={() => setCompanyId(el.id)}
-                    >
-                      <p class="fw-bold">{el.company_name}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="d-flex gap-3 mt-3 align-items-center">
-              <div
-                class="d-flex gap-2"
-                style={{ cursor: "pointer" }}
-                onClick={() => setChangeAll(!changeAll)}
-              >
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckChecked"
-                  checked={changeAll ? true : false}
-                />
-                <label class="form-check-label" for="flexCheckChecked">
-                  Bulk Update
-                </label>
-              </div>
-              {changeAll && (
-                <div class="d-flex gap-2">
-                  <input
-                    type="number"
-                    class="form-control"
-                    onChange={(e) => setAllMarkupValue(e.target.value)}
-                  />
-                  {/* <button class='btn btn-primary text-nowrap' onClick={updateBulkMarkup}>Update All</button> */}
-                </div>
+              <p className="fw-semibold mb-0">{el.company_name}</p>
+              {companyId === el.id && (
+                <i className="bi bi-check-circle-fill text-primary"></i>
               )}
             </div>
-          </div>
+          ))}
         </div>
+      </div>
+    </div>
+  </div>
+
+  {/* Bulk Update Section */}
+  <div className="col-md-6">
+    <div className="d-flex gap-3 mt-3 align-items-center">
+      <div
+        className="d-flex gap-2 align-items-center"
+        style={{ cursor: "pointer" }}
+        onClick={() => setChangeAll(!changeAll)}
+      >
+        <input
+          className="form-check-input"
+          type="checkbox"
+          id="flexCheckChecked"
+          checked={changeAll}
+          readOnly
+        />
+        <label className="form-check-label fw-semibold" htmlFor="flexCheckChecked">
+          Bulk Update
+        </label>
+      </div>
+
+      {changeAll && (
+        <div className="d-flex gap-2">
+          <input
+            type="number"
+            className="form-control"
+            placeholder="Enter value"
+            onChange={(e) => setAllMarkupValue(e.target.value)}
+          />
+          {/* <button className="btn btn-primary text-nowrap" onClick={updateBulkMarkup}>Update All</button> */}
+        </div>
+      )}
+    </div>
+  </div>
+</div>
 
         <div>
           <div class=" mt-2" style={{ overflowX: "auto" }}>

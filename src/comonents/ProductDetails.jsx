@@ -328,7 +328,7 @@ const ProductDetails = () => {
 
       <div class="col-11 m-auto row mt-3 gap-lg-0 gap-4 mb-3">
         <div class="col-lg-5  ProductSlider rounded-3 ">
-          <div class="text-start my-3">
+          <div class="text-center my-3">
             <p class="h1">{productData?.name}</p>
           </div>
           {/* <ProductDetailsCarousel data={productData?.images} /> */}
@@ -353,7 +353,7 @@ const ProductDetails = () => {
                 onClick={() => setStep("step1")}
               >
                 {" "}
-                Step 1 : Poduct Option
+                Step 1 : Product Option
               </div>
               <div
                 class="productSteps rounded-end-3 "
@@ -494,15 +494,24 @@ const ProductDetails = () => {
                       />
                     </div>
 
-                    <div class="mt-3">
-                      <label htmlFor="" class="fw-semibold">
-                        Mobile/Phone No. <span class="text-danger">*</span>
+                    <div className="mt-3">
+                      <label htmlFor="phone" className="fw-semibold">
+                        Mobile/Phone No. <span className="text-danger">*</span>
                       </label>
                       <input
-                        type="type"
-                        class="form-control"
-                        placeholder="Type Here"
+                        type="text"
+                        id="phone"
+                        className="form-control"
+                        placeholder="Enter 10-digit mobile no."
                         name="phone"
+                        maxLength="10"
+                        onInput={(e) => {
+                          // Only digits allowed
+                          e.target.value = e.target.value.replace(
+                            /[^0-9]/g,
+                            ""
+                          );
+                        }}
                         onChange={fillPlaceOrder}
                       />
                     </div>
@@ -549,73 +558,91 @@ const ProductDetails = () => {
                         <p>No</p>
                       </div>
                     </div>
-                    {shippmentNeed && (
-                      <div class="mt-3">
-                        <label htmlFor="" class="fw-semibold">
-                          Delivery Address <span class="text-danger">*</span>
-                        </label>
-                        <input
-                          type="type"
-                          class="form-control"
-                          placeholder="Type Here"
-                          name="address"
-                          onChange={fillPlaceOrder}
-                        />
-                      </div>
-                    )}
+                   {shippmentNeed && (
+  <div className="mt-3">
+    {/* Delivery Address */}
+    <label htmlFor="address" className="fw-semibold mb-2 d-block">
+      Delivery Address <span className="text-danger">*</span>
+    </label>
+    <input
+      type="text"
+      id="address"
+      className="form-control shadow-sm border rounded-3 px-3 py-2"
+      placeholder="Enter your delivery address"
+      name="address"
+      onChange={fillPlaceOrder}
+    />
+  </div>
+)}
 
-                    {shippmentNeed && (
-                      <div class="border rounded-3 mt-4 ">
-                        <div
-                          class="d-flex gap-1 align-items-center justify-content-between   p-3 py-2"
-                          data-bs-toggle="collapse"
-                          href="#shippingMethod"
-                          role="button"
-                          aria-expanded="false"
-                          aria-controls="shippingMethod"
-                        >
-                          <div>
-                            <p>
-                              Shipping Method <span class="text-danger">*</span>
-                            </p>
-                            <p class="text-secondary fw-semibold">
-                              {!shippingMethod
-                                ? "Select Here"
-                                : shippingMethod?.name}
-                            </p>
-                          </div>
+{shippmentNeed && (
+  <div className="border rounded-3 mt-4 shadow-sm overflow-hidden">
+    {/* Header */}
+    <div
+      className="d-flex gap-2 align-items-center justify-content-between p-3 bg-light rounded-top"
+      data-bs-toggle="collapse"
+      href="#shippingMethod"
+      role="button"
+      aria-expanded="false"
+      aria-controls="shippingMethod"
+      style={{ cursor: "pointer" }}
+    >
+      <div>
+        <p className="fw-semibold mb-1">
+          Shipping Method <span className="text-danger">*</span>
+        </p>
+        <p className="text-secondary fw-semibold small mb-0">
+          {!shippingMethod
+            ? "Select your preferred method"
+            : shippingMethod?.name}
+        </p>
+      </div>
+      <i className="bi bi-chevron-down fs-5 text-muted"></i>
+    </div>
 
-                          <p>
-                            <i class="bi bi-chevron-down"></i>
-                          </p>
-                        </div>
-                        <div class="collapse" id="shippingMethod">
-                          <div class="col-11 m-auto">
-                            <br />
-                            {shippingList &&
-                              shippingList?.map((el, i) => {
-                                return (
-                                  <div
-                                    class="p-2 border-bottom"
-                                    style={{ cursor: "pointer" }}
-                                    key={i}
-                                    onClick={() => setShippingMethod(el)}
-                                  >
-                                    <p>{el?.name}</p>
-                                  </div>
-                                );
-                              })}
-                          </div>
-                        </div>
-                        {shippingMethod ? (
-                          ""
-                        ) : (
-                          <p class="text-danger px-2">
-                            **Please Select shipping method**
-                          </p>
-                        )}
-                      </div>
-                    )}
+    {/* Collapse Content */}
+    <div className="collapse" id="shippingMethod">
+      <div className="p-3">
+        {shippingList && shippingList.length > 0 ? (
+          shippingList.map((el, i) => (
+            <div
+              key={i}
+              className={`p-3 rounded-3 mb-2 border d-flex justify-content-between align-items-center ${
+                shippingMethod?.name === el?.name
+                  ? "border-primary bg-primary bg-opacity-10"
+                  : "border-light"
+              }`}
+              style={{ cursor: "pointer", transition: "0.2s" }}
+              onClick={() => {
+                setShippingMethod(el);
+
+                // Collapse close after selection
+                const collapseEl = document.getElementById("shippingMethod");
+                const bsCollapse = window.bootstrap.Collapse.getOrCreateInstance(collapseEl);
+                bsCollapse.hide();
+              }}
+            >
+              <p className="mb-0 fw-semibold">{el?.name}</p>
+              {shippingMethod?.name === el?.name && (
+                <i className="bi bi-check-circle-fill text-primary"></i>
+              )}
+            </div>
+          ))
+        ) : (
+          <p className="text-muted">No shipping methods available</p>
+        )}
+      </div>
+    </div>
+
+    {/* Error */}
+    {!shippingMethod && (
+      <p className="text-danger px-3 pb-2 small">
+        ** Please select a shipping method **
+      </p>
+    )}
+  </div>
+)}
+
 
                     {/* <div class='mt-4'>
                       <p class='fs-4 fw-bold'>Shipment 1</p>

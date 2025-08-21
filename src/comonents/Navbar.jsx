@@ -1,5 +1,8 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
+
 import "./style.css";
 
 const Navbar = () => {
@@ -27,19 +30,35 @@ const Navbar = () => {
         <div class="pcNav">
           <div class="d-flex align-items-center gap-5 fw-semibold fs-5 ">
             {token ? (
-              <p
-                style={{ cursor: "pointer" }}
-                onClick={() => navigate("./dashboard")}
+              // <p
+              //   style={{ cursor: "pointer" }}
+              //   onClick={() => navigate("./dashboard")}
+              // >
+              //   Dashboard
+              // </p>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
               >
                 Dashboard
-              </p>
+              </NavLink>
             ) : (
-              <p style={{ cursor: "pointer" }} onClick={() => navigate("./")}>
+              // <p style={{ cursor: "pointer" }} onClick={() => navigate("./")}>
+              //   Home
+              // </p>
+              <NavLink
+                to="/"
+                className={({ isActive }) =>
+                  isActive ? "nav-link active" : "nav-link"
+                }
+              >
                 Home
-              </p>
+              </NavLink>
             )}
             {!token && (
-              <Link
+              <NavLink
                 to="/#features"
                 style={{
                   textDecoration: "none",
@@ -48,7 +67,7 @@ const Navbar = () => {
                 }}
               >
                 <p style={{ cursor: "pointer" }}>Features</p>
-              </Link>
+              </NavLink>
             )}
             {!token && (
               <Link
@@ -62,18 +81,29 @@ const Navbar = () => {
                 <p style={{ cursor: "pointer" }}>Pricing</p>
               </Link>
             )}
-            <p
-              style={{ cursor: "pointer" }}
-              onClick={() => navigate("./support")}
+            <NavLink
+              to="/support"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
             >
-              Support{" "}
-            </p>
+              Support
+            </NavLink>
+            {/* 
             <p
               style={{ cursor: "pointer" }}
               onClick={() => navigate("./contact")}
             >
               Contact Us
-            </p>
+            </p> */}
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
+              Contact Us
+            </NavLink>
           </div>
         </div>
         <div class=" d-flex align-items-center gap-4">

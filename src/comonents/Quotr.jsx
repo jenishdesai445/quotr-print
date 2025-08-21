@@ -290,7 +290,7 @@ const Quotr = () => {
               </div>
               <div class="text-white my-3">
                 <p class="fw-bold fs-5">Register Account</p>
-                <p>And choose tier</p>
+                {/* <p>And choose tier</p> */}
               </div>
             </div>
 
@@ -303,7 +303,7 @@ const Quotr = () => {
               </div>
               <div class="text-white my-3">
                 <p class="fw-bold fs-5">Download Our App</p>
-                <p>From link above</p>
+                {/* <p>From link above</p> */}
               </div>
             </div>
 
@@ -316,7 +316,7 @@ const Quotr = () => {
               </div>
               <div class="text-white my-3">
                 <p class="fw-bold fs-5">Customize Admin Account</p>
-                <p>Add Users and set up profit margins</p>
+                {/* <p>Add Users and set up profit margins</p> */}
               </div>
             </div>
 
@@ -329,7 +329,7 @@ const Quotr = () => {
               </div>
               <div class="text-white my-3">
                 <p class="fw-bold fs-5 ">Start Selling</p>
-                <p> You’re ready to start selling print like never before!</p>
+                {/* <p> You’re ready to start selling print like never before!</p> */}
               </div>
             </div>
           </div>
@@ -575,7 +575,7 @@ const Quotr = () => {
           {/* <p class='fs-5 fw-bold col-lg-8 m-auto' data-aos="fade-up">Discover the ideal plan to fuel your business growth. Our pricing options are carefully crafted to cater to business.</p> */}
         </div>
 
-        <div class=" d-flex align-items-center justify-content-center m-auto row gap-3 my-5">
+        {/* <div class=" d-flex align-items-center justify-content-center m-auto row gap-3 my-5">
           {subscription?.map((el) => {
             return (
               <div class="" data-aos="fade-up" style={{ width: "fit-content" }}>
@@ -583,7 +583,7 @@ const Quotr = () => {
                   <div class="col-11 m-auto">
                     <div>
                       <p class="mt-3 fs-4 fw-bold">{el.name}</p>
-                      {/* <p style={{ fontSize: '12px' }} > Take Your Business to the Next Level with Business Plan</p> */}
+
                       <p style={{}}>Max Store : {el.allow_login}</p>
 
                       <p>
@@ -601,6 +601,53 @@ const Quotr = () => {
                         }
                       >
                         Sign Up{" "}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div> */}
+        <div class="d-flex align-items-center justify-content-center m-auto row gap-3 my-5">
+          {subscription?.map((el, i) => {
+            return (
+              <div key={i} data-aos="fade-up" style={{ width: "fit-content" }}>
+                <div class="text-start m-auto rounded-4 p-3 fw-bold planCard">
+                  <div class="col-11 m-auto">
+                    <div>
+                      <p class="mt-3 fs-4 fw-bold">{el.name}</p>
+
+                      <p>Max Store : {el.allow_login}</p>
+
+                      <p>
+                        {/* {el?.old_price && ( */}
+                        <span
+                          style={{
+                            textDecoration: "line-through",
+                            color: "#888",
+                            marginRight: "8px",
+                            fontSize: "18px",
+                          }}
+                        >
+                          {/* ${el?.old_price} */}${el?.price}
+                        </span>
+                        {/* )} */}
+                        {/* <span class="fs-1 text-success">${el?.price}</span>{" "} */}
+                        <span class="fs-1 text-success">${4.99}</span>{" "}
+                        <span style={{ fontSize: "12px" }}>per month</span>
+                      </p>
+                    </div>
+                    <hr />
+
+                    <div class="m-auto my-2" style={{ width: "fit-content" }}>
+                      <button
+                        class="homeTopBtn"
+                        onClick={() =>
+                          navigate("/sign-up", { state: { plan: el } })
+                        }
+                      >
+                        Sign Up
                       </button>
                     </div>
                   </div>
@@ -686,7 +733,7 @@ const Quotr = () => {
                 </div>
                 <div>Quotes emailed to directly to store</div>
               </div>
-              <div class="d-flex gap-2 mt-3" data-aos="fade-up">
+              {/* <div class="d-flex gap-2 mt-3" data-aos="fade-up">
                 <div
                   class="p-1 bg-light d-flex align-items-center justify-content-center"
                   style={{ width: "25px", height: "25px", borderRadius: "50%" }}
@@ -694,7 +741,7 @@ const Quotr = () => {
                   <i class="bi bi-check"></i>
                 </div>
                 <div>24 Hour Support </div>
-              </div>
+              </div> */}
 
               <button
                 class="homeTopBtn px-4 p-2"

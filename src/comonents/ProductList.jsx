@@ -90,7 +90,7 @@ const ProductList = () => {
       <div class="col-md-8 m-auto row mt-5 ">
         {categoryData?.map?.((el) => {
           return (
-            <div class="col-lg-4 col-6 m-auto my-3 ">
+            <div class="col-lg-4 col-12 m-auto my-3 ">
               <Link
                 to="/product-details"
                 state={el.id}
@@ -125,11 +125,9 @@ const ProductList = () => {
                       />
                     </div>
                   </div>
-                  <div class="h-100">
-                    <p class="fs-16 fw-bold  col-11 m-auto">{el.name}</p>
-                    <p class="fs-14 py-2 col-11 m-auto text-secondary">
-                      {el.text}
-                    </p>
+                  <div class="h-100 text-center">
+                    <p class="fs-16 py-3 fw-semibold">{el.name}</p>
+                    <p class="fs-14 py-2 text-secondary">{el.text}</p>
                   </div>
                 </div>
               </Link>

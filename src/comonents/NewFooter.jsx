@@ -32,13 +32,26 @@ const NewFooter = () => {
               <div class="d-flex gap-3  text-end">
                 {token ? (
                   <p
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
                     class="fw-semibold"
                     onClick={() => navigate("./dashboard")}
                   >
                     Dashboard
                   </p>
                 ) : (
-                  <p class="fw-semibold" onClick={() => navigate("./")}>
+                  <p
+                    style={{
+                      textDecoration: "none",
+                      color: "black",
+                      cursor: "pointer",
+                    }}
+                    class="fw-semibold"
+                    onClick={() => navigate("./")}
+                  >
                     Home
                   </p>
                 )}
@@ -77,10 +90,26 @@ const NewFooter = () => {
                     <p class="fw-semibold">Pricing</p>
                   </Link>
                 )}
-                <p class="fw-semibold" onClick={() => navigate("./support")}>
+                <p
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                    cursor: "pointer",
+                  }}
+                  class="fw-semibold "
+                  onClick={() => navigate("./support")}
+                >
                   Support
                 </p>
-                <p class="fw-semibold" onClick={() => navigate("./contact")}>
+                <p
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                    cursor: "pointer",
+                  }}
+                  class="fw-semibold"
+                  onClick={() => navigate("./contact")}
+                >
                   Contact Us
                 </p>
               </div>
@@ -108,11 +137,22 @@ const NewFooter = () => {
         <hr />
       </div>
       <div class="col-11 m-auto bg-dark text-white rounded-3 row p-2 fw-semibold">
-        <div class="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
-          <p class="p-md-2">Call us on : 512-222-8360</p>
-        </div>
-        <div class="col-md-6 d-flex align-items-center justify-content-md-end justify-content-center ">
-          <p class="p-md-2">For Support : info@quotrprint.com</p>
+        {/* <div className="col-md-6 d-flex align-items-center justify-content-md-start justify-content-center">
+          <a
+            href="tel:5122228360"
+            className="p-md-2 text-decoration-none cursor-pointer text-white"
+          >
+            Call us on : 512-222-8360
+          </a>
+        </div> */}
+
+        <div className="col-md-12 d-flex align-items-center justify-content-md-end justify-content-center">
+          <a
+            href="mailto:info@quotrprint.com"
+            className="p-md-2 text-decoration-none text-white"
+          >
+            For Support : info@quotrprint.com
+          </a>
         </div>
       </div>
       <div class="col-11 m-auto    row p-2 fw-semibold">
