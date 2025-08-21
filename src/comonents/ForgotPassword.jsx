@@ -64,6 +64,7 @@ const ForgotPassword = () => {
             });
             setSentMail(false);
             setOtpBox(true);
+            setOtp("");
           } else {
             Swal.fire({
               title: "Error!",
@@ -188,7 +189,7 @@ const ForgotPassword = () => {
               <HiOutlineMail />
             </span>
             <input
-              type="text"
+              type="email"
               className="form-control"
               placeholder="Email"
               name="email" // Change 'username' to 'email'

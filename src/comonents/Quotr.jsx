@@ -16,6 +16,7 @@ const Quotr = () => {
   const [subscription, setSubscription] = useState();
 
   const { setIsLoading } = useLoading();
+  let token = localStorage.getItem("quotrUserToken");
 
   const navigate = useNavigate();
 
@@ -201,20 +202,22 @@ const Quotr = () => {
               Transforming Print Sales Behind the Counter. Quote Faster, Sell
               More
             </p>
-            <Link
-              activeClass="active"
-              to="pricing"
-              spy={true}
-              smooth={true}
-              offset={-70}
-              duration={500}
-              style={{
-                textDecoration: "none",
-                cursor: "pointer",
-              }}
-            >
-              <button class="homeTopBtn px-4 p-2"> Sign-Up Now</button>
-            </Link>
+            {!token && (
+              <Link
+                activeClass="active"
+                to="pricing"
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+                style={{
+                  textDecoration: "none",
+                  cursor: "pointer",
+                }}
+              >
+                <button class="homeTopBtn px-4 p-2"> Sign-Up Now</button>
+              </Link>
+            )}
           </div>
         </div>
 
@@ -593,16 +596,18 @@ const Quotr = () => {
                     </div>
                     <hr />
 
-                    <div class="m-auto my-2" style={{ width: "fit-content" }}>
-                      <button
-                        class="homeTopBtn "
-                        onClick={() =>
-                          navigate("/sign-up", { state: { plan: { el } } })
-                        }
-                      >
-                        Sign Up{" "}
-                      </button>
-                    </div>
+                    {!token && (
+                      <div class="m-auto my-2" style={{ width: "fit-content" }}>
+                        <button
+                          class="homeTopBtn "
+                          onClick={() =>
+                            navigate("/sign-up", { state: { plan: { el } } })
+                          }
+                        >
+                          Sign Up{" "}
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

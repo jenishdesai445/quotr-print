@@ -37,22 +37,24 @@ const PricingMarkup = () => {
       navigate("/dashboard");
     } else {
       setIsLoading(true);
-      axios
-        .post(
-          `https://bp.quotrprint.com/api/companyList`,
-          { customerId: customerId },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-        .then((res) => {
-          setCompany(res?.data?.data);
-          setCompanyId(res?.data?.data?.[0]?.id);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setIsLoading(false);
+      if (customerId) {
+        axios
+          .post(
+            `https://bp.quotrprint.com/api/companyList`,
+            { customerId: customerId },
+            { headers: { Authorization: `Bearer ${token}` } }
+          )
+          .then((res) => {
+            setCompany(res?.data?.data);
+            setCompanyId(res?.data?.data?.[0]?.id);
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            setIsLoading(false);
 
-          // console.log(err);
-        });
+            // console.log(err);
+          });
+      }
     }
   }, [customerId, token]);
 
@@ -103,7 +105,11 @@ const PricingMarkup = () => {
           showCancelButton: true,
           focusConfirm: false,
           confirmButtonText: "OK",
-          cancelButtonText: `  <a class="text-white" style='text-decoration:none' href="/dashboard"><i class="bi bi-box-arrow-left"></i> Dashboard</a>  `,
+          cancelButtonText: "Dashboard",
+        }).then((result) => {
+          if (result.dismiss === Swal.DismissReason.cancel) {
+            navigate("/dashboard");
+          }
         });
         setChangeAll(false);
       })

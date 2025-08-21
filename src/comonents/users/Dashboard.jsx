@@ -78,20 +78,22 @@ const Dashboard = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    axios
-      .post(
-        `https://bp.quotrprint.com/api/companyList`,
-        { customerId: customerId },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-      .then((res) => {
-        setCompany(res?.data?.data);
-        setIsLoading(false);
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        // console.log(err);
-      });
+    if (customerId) {
+      axios
+        .post(
+          `https://bp.quotrprint.com/api/companyList`,
+          { customerId: customerId },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          setCompany(res?.data?.data);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setIsLoading(false);
+          // console.log(err);
+        });
+    }
   }, [customerId, token]);
 
   const CallCompanyIdAdmin = (el) => {

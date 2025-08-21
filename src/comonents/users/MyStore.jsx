@@ -28,21 +28,23 @@ const MyStore = () => {
       navigate("/dashboard");
     } else {
       setIsLoading(true);
-      axios
-        .post(
-          `https://bp.quotrprint.com/api/companyList`,
-          { customerId: customerId },
-          { headers: { Authorization: `Bearer ${token}` } }
-        )
-        .then((res) => {
-          // console.log(res.data);
-          setMyStoreData(res?.data?.data);
-          setIsLoading(false);
-        })
-        .catch((err) => {
-          setIsLoading(false);
-          // console.log(err);
-        });
+      if (customerId) {
+        axios
+          .post(
+            `https://bp.quotrprint.com/api/companyList`,
+            { customerId: customerId },
+            { headers: { Authorization: `Bearer ${token}` } }
+          )
+          .then((res) => {
+            // console.log(res.data);
+            setMyStoreData(res?.data?.data);
+            setIsLoading(false);
+          })
+          .catch((err) => {
+            setIsLoading(false);
+            // console.log(err);
+          });
+      }
     }
   }, [customerId, token]);
 

@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLoading } from "./LoadingContext ";
+import { ClipLoader } from "react-spinners";
 
 const ProductAttribute2 = ({ attrData, productId, getData }) => {
-  const { setIsLoading } = useLoading();
+  const [loading, setIsLoading] = useState();
 
   let token = localStorage.getItem("quotrUserToken");
   const attId = attrData?.id;
@@ -134,13 +135,25 @@ const ProductAttribute2 = ({ attrData, productId, getData }) => {
         <p class="mt-3 fw-semibold">
           {el?.name} <span class="text-danger">*</span>
         </p>
+
         <select
           key={el.id}
           className="form-select detailList"
           onClick={() => handleClickEvent(el.id)}
           onChange={(e) => handleChangeEvent(e, el.id)}
         >
-          <option value="">Select an option</option>
+          <option value="">Select an option </option>
+          {loading && (
+            <option value="">
+              loading...
+              <ClipLoader
+                loading={loading}
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+            </option>
+          )}
           {(mapOfAttributeIdToValue.get(el.id) || []).map((value) => (
             <option key={value.id} value={JSON.stringify(value)}>
               {value.name}
