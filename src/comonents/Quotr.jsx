@@ -646,14 +646,16 @@ const Quotr = () => {
                     <hr />
 
                     <div class="m-auto my-2" style={{ width: "fit-content" }}>
-                      <button
-                        class="homeTopBtn"
-                        onClick={() =>
-                          navigate("/sign-up", { state: { plan: el } })
-                        }
-                      >
-                        Sign Up
-                      </button>
+                      {!token && (
+                        <button
+                          class="homeTopBtn"
+                          onClick={() =>
+                            navigate("/sign-up", { state: { plan: el } })
+                          }
+                        >
+                          Sign Up
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
