@@ -42,6 +42,8 @@ const ProductDetails = () => {
   let companyId = localStorage.getItem("quotrCompanyId");
   let userId = localStorage.getItem("quotrUserId");
 
+  const [emailError, setEmailError] = useState("");
+
   const { setIsLoading } = useLoading();
 
   const navigate = useNavigate();
@@ -164,6 +166,15 @@ const ProductDetails = () => {
 
   const fillPlaceOrder = (e) => {
     const { name, value } = e.target;
+
+    if (name === "email") {
+      if (!validateEmail(value)) {
+        setEmailError("Please enter a valid email address");
+      } else {
+        setEmailError("");
+      }
+    }
+
     setPlaceOrder({ ...placeOrder, [name]: value });
   };
 
@@ -210,6 +221,11 @@ const ProductDetails = () => {
     totalTax,
     productType,
   ]);
+
+  const validateEmail = (email) => {
+    const regex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+    return regex.test(email);
+  };
 
   const confirmOrder = () => {
     if (
@@ -502,9 +518,9 @@ const ProductDetails = () => {
                         type="text"
                         id="phone"
                         className="form-control"
-                        placeholder="Enter 10-digit mobile no."
+                        placeholder="Enter mobile no."
                         name="phone"
-                        maxLength="10"
+                        // maxLength="10"
                         onInput={(e) => {
                           // Only digits allowed
                           e.target.value = e.target.value.replace(
@@ -516,17 +532,26 @@ const ProductDetails = () => {
                       />
                     </div>
 
-                    <div class="mt-3">
-                      <label htmlFor="" class="fw-semibold">
-                        Email <span class="text-danger">*</span>
+                    <div className="mt-3">
+                      <label htmlFor="email" className="fw-semibold">
+                        Email <span className="text-danger">*</span>
                       </label>
                       <input
-                        type="type"
-                        class="form-control"
+                        type="email"
+                        id="email"
+                        className={`form-control ${
+                          emailError ? "is-invalid" : ""
+                        }`}
                         placeholder="Type Here"
                         name="email"
+                        required
                         onChange={fillPlaceOrder}
                       />
+                      {emailError && (
+                        <div className="text-danger small mt-1">
+                          {emailError}
+                        </div>
+                      )}
                     </div>
 
                     <div class="mt-3 d-flex gap-3 align-items-center">
@@ -558,91 +583,104 @@ const ProductDetails = () => {
                         <p>No</p>
                       </div>
                     </div>
-                   {shippmentNeed && (
-  <div className="mt-3">
-    {/* Delivery Address */}
-    <label htmlFor="address" className="fw-semibold mb-2 d-block">
-      Delivery Address <span className="text-danger">*</span>
-    </label>
-    <input
-      type="text"
-      id="address"
-      className="form-control shadow-sm border rounded-3 px-3 py-2"
-      placeholder="Enter your delivery address"
-      name="address"
-      onChange={fillPlaceOrder}
-    />
-  </div>
-)}
+                    {shippmentNeed && (
+                      <div className="mt-3">
+                        {/* Delivery Address */}
+                        <label
+                          htmlFor="address"
+                          className="fw-semibold mb-2 d-block"
+                        >
+                          Delivery Address{" "}
+                          <span className="text-danger">*</span>
+                        </label>
+                        <input
+                          type="text"
+                          id="address"
+                          className="form-control shadow-sm border rounded-3 px-3 py-2"
+                          placeholder="Enter your delivery address"
+                          name="address"
+                          onChange={fillPlaceOrder}
+                        />
+                      </div>
+                    )}
 
-{shippmentNeed && (
-  <div className="border rounded-3 mt-4 shadow-sm overflow-hidden">
-    {/* Header */}
-    <div
-      className="d-flex gap-2 align-items-center justify-content-between p-3 bg-light rounded-top"
-      data-bs-toggle="collapse"
-      href="#shippingMethod"
-      role="button"
-      aria-expanded="false"
-      aria-controls="shippingMethod"
-      style={{ cursor: "pointer" }}
-    >
-      <div>
-        <p className="fw-semibold mb-1">
-          Shipping Method <span className="text-danger">*</span>
-        </p>
-        <p className="text-secondary fw-semibold small mb-0">
-          {!shippingMethod
-            ? "Select your preferred method"
-            : shippingMethod?.name}
-        </p>
-      </div>
-      <i className="bi bi-chevron-down fs-5 text-muted"></i>
-    </div>
+                    {shippmentNeed && (
+                      <div className="border rounded-3 mt-4 shadow-sm overflow-hidden">
+                        {/* Header */}
+                        <div
+                          className="d-flex gap-2 align-items-center justify-content-between p-3 bg-light rounded-top"
+                          data-bs-toggle="collapse"
+                          href="#shippingMethod"
+                          role="button"
+                          aria-expanded="false"
+                          aria-controls="shippingMethod"
+                          style={{ cursor: "pointer" }}
+                        >
+                          <div>
+                            <p className="fw-semibold mb-1">
+                              Shipping Method{" "}
+                              <span className="text-danger">*</span>
+                            </p>
+                            <p className="text-secondary fw-semibold small mb-0">
+                              {!shippingMethod
+                                ? "Select your preferred method"
+                                : shippingMethod?.name}
+                            </p>
+                          </div>
+                          <i className="bi bi-chevron-down fs-5 text-muted"></i>
+                        </div>
 
-    {/* Collapse Content */}
-    <div className="collapse" id="shippingMethod">
-      <div className="p-3">
-        {shippingList && shippingList.length > 0 ? (
-          shippingList.map((el, i) => (
-            <div
-              key={i}
-              className={`p-3 rounded-3 mb-2 border d-flex justify-content-between align-items-center ${
-                shippingMethod?.name === el?.name
-                  ? "border-primary bg-primary bg-opacity-10"
-                  : "border-light"
-              }`}
-              style={{ cursor: "pointer", transition: "0.2s" }}
-              onClick={() => {
-                setShippingMethod(el);
+                        {/* Collapse Content */}
+                        <div className="collapse" id="shippingMethod">
+                          <div className="p-3">
+                            {shippingList && shippingList.length > 0 ? (
+                              shippingList.map((el, i) => (
+                                <div
+                                  key={i}
+                                  className={`p-3 rounded-3 mb-2 border d-flex justify-content-between align-items-center ${
+                                    shippingMethod?.name === el?.name
+                                      ? "border-primary bg-primary bg-opacity-10"
+                                      : "border-light"
+                                  }`}
+                                  style={{
+                                    cursor: "pointer",
+                                    transition: "0.2s",
+                                  }}
+                                  onClick={() => {
+                                    setShippingMethod(el);
 
-                // Collapse close after selection
-                const collapseEl = document.getElementById("shippingMethod");
-                const bsCollapse = window.bootstrap.Collapse.getOrCreateInstance(collapseEl);
-                bsCollapse.hide();
-              }}
-            >
-              <p className="mb-0 fw-semibold">{el?.name}</p>
-              {shippingMethod?.name === el?.name && (
-                <i className="bi bi-check-circle-fill text-primary"></i>
-              )}
-            </div>
-          ))
-        ) : (
-          <p className="text-muted">No shipping methods available</p>
-        )}
-      </div>
-    </div>
+                                    // Collapse close after selection
+                                    const collapseEl =
+                                      document.getElementById("shippingMethod");
+                                    const bsCollapse =
+                                      window.bootstrap.Collapse.getOrCreateInstance(
+                                        collapseEl
+                                      );
+                                    bsCollapse.hide();
+                                  }}
+                                >
+                                  <p className="mb-0 fw-semibold">{el?.name}</p>
+                                  {shippingMethod?.name === el?.name && (
+                                    <i className="bi bi-check-circle-fill text-primary"></i>
+                                  )}
+                                </div>
+                              ))
+                            ) : (
+                              <p className="text-muted">
+                                No shipping methods available
+                              </p>
+                            )}
+                          </div>
+                        </div>
 
-    {/* Error */}
-    {!shippingMethod && (
-      <p className="text-danger px-3 pb-2 small">
-        ** Please select a shipping method **
-      </p>
-    )}
-  </div>
-)}
-
+                        {/* Error */}
+                        {!shippingMethod && (
+                          <p className="text-danger px-3 pb-2 small">
+                            ** Please select a shipping method **
+                          </p>
+                        )}
+                      </div>
+                    )}
 
                     {/* <div class='mt-4'>
                       <p class='fs-4 fw-bold'>Shipment 1</p>

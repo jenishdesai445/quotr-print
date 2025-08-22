@@ -193,14 +193,13 @@ const OrderList = () => {
                   <td className="text-nowrap fw-bold text-center">
                     {el.grand_tot_amount}
                   </td>
-
                   {/* {user == 'true' &&
                                         <td className='text-nowrap fw-bold text-center'>  {statuValueUser(el.status)}  </td>
                                     } */}
                   {/* {user == 'false' && */}
                   <td className="text-nowrap fw-bold text-center">
                     <select
-                      class={`form-control fw-bold orderStatus${el.status}`}
+                      className={`form-control fw-bold orderStatus${el.status}`}
                       key={i}
                       value={el.status}
                       onChange={(e) =>
@@ -210,12 +209,15 @@ const OrderList = () => {
                         })
                       }
                     >
-                      <option value="1">Pending</option>
-                      <option value="2">Process </option>
+                      <option value="1" disabled={el.status !== 1}>
+                        Pending
+                      </option>
+                      <option value="2">Process</option>
                       <option value="3">Cancel</option>
                       <option value="4">Completed</option>
                     </select>
                   </td>
+
                   {/* } */}
                   <td className="text-nowrap fw-bold text-center">
                     <button

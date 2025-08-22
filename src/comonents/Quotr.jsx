@@ -309,7 +309,6 @@ const Quotr = () => {
                 {/* <p>From link above</p> */}
               </div>
             </div>
-
             <div class="col-lg-3 col-sm-6" data-aos="zoom-in">
               <div
                 class="d-flex align-items-center justify-content-center bg-white m-auto"
@@ -583,31 +582,43 @@ const Quotr = () => {
               Get Free Access 16 Days
             </p> */}
 
-          
             <div className="d-flex align-items-center justify-content-center m-auto row gap-3 my-5">
-              <div data-aos="fade-up" style={{ width: "fit-content" }}>
-                <div className="text-start m-auto rounded-4 p-3 fw-bold planCard">
-                  <div className="col-11 m-auto">
-                    <div>
-                      <p className="mt-3 fs-4 fw-bold">
-                        {subscription?.[0]?.name}
-                      </p>
-                      <p>Max Store : {subscription?.[0]?.allow_login}</p>
-                      <p>
-                        <span className="fs-1 text-success">
-                          ${subscription?.[0]?.price || 4.99}
-                        </span>{" "}
-                        <span style={{ fontSize: "12px" }}>per month</span>
-                      </p>
-                    </div>
-                    <hr />
+              {subscription?.map((el, i) => (
+                <div
+                  key={i}
+                  data-aos="fade-up"
+                  style={{ width: "fit-content" }}
+                >
+                  <div className="text-start m-auto rounded-4 p-3 fw-bold planCard">
+                    <div className="col-11 m-auto">
+                      <div>
+                        <p className="mt-3 fs-4 fw-bold">{el.name}</p>
+                        <p>Max Store : {el.allow_login}</p>
+                        <p>
+                          <span
+                            style={{
+                              textDecoration: "line-through",
+                              color: "#888",
+                              marginRight: "8px",
+                              fontSize: "18px",
+                            }}
+                          >
+                            ${el?.price}
+                          </span>
+                          <span className="fs-1 text-success">${4.99}</span>{" "}
+                          <span style={{ fontSize: "12px" }}>per month</span>
+                        </p>
+                      </div>
+                      <hr />
 
-                    <p class="text-center text-primary fw-semibold mb-2">
-                      Get Free Access 16 Days
-                    </p>
+                      <p class="text-center text-primary fw-semibold mb-2">
+                        Get Free Access 16 Days
+                      </p>
+                    
+                    </div>
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         ) : (
