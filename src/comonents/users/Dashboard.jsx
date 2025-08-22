@@ -301,7 +301,7 @@ const Dashboard = () => {
               </p>
             </div>
             <div class="mt-3 col-11 m-auto">
-              <p class="fs-5 fw-bold">  Order : {data?.tot_order}</p>
+              <p class="fs-5 fw-bold"> All Orders : {data?.tot_order}</p>
             </div>
           </div>
         </div>
@@ -316,7 +316,7 @@ const Dashboard = () => {
             <div class="mt-3 col-11 m-auto">
               <p class="fs-5 fw-bold">
                 {" "}
-                Pending Order : {data?.tot_pending_order}
+                Pending Orders : {data?.tot_pending_order}
               </p>
             </div>
           </div>
@@ -334,7 +334,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div class="mt-3 col-11 m-auto">
-                <p class="fs-5 fw-bold"> Users/Stores : {data?.tot_users} </p>
+                <p class="fs-5 fw-bold"> Store Profile : {data?.tot_users} </p>
               </div>
             </div>
           </div>
@@ -352,7 +352,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div class="mt-3 col-11 m-auto">
-                <p class="fs-5 fw-bold">Price Markup</p>
+                <p class="fs-5 fw-bold">Pricing Markup</p>
               </div>
             </div>
           </div>
@@ -369,7 +369,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div class="mt-3 col-11 m-auto">
-                <p class="fs-5 fw-bold"> Shipping Pricing</p>
+                <p class="fs-5 fw-bold"> Shipping Markup</p>
               </div>
             </div>
           </div>
@@ -386,7 +386,7 @@ const Dashboard = () => {
                 </p>
               </div>
               <div class="mt-3 col-11 m-auto">
-                <p class="fs-5 fw-bold">New Order</p>
+                <p class="fs-5 fw-bold">Store View</p>
               </div>
             </div>
           </div>
@@ -419,7 +419,7 @@ const Dashboard = () => {
               </p>
             </div>
             <div class="mt-3 col-11 m-auto">
-              <p class="fs-5 fw-bold"> Profile</p>
+              <p class="fs-5 fw-bold">Admin Profile</p>
             </div>
           </div>
         </div>

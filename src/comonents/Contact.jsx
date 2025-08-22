@@ -165,6 +165,10 @@ const Contact = () => {
                 value={contact?.phone}
                 placeholder="Phone"
                 name="phone"
+                onInput={(e) => {
+                  // Only digits allowed
+                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                }}
                 onChange={contactDetails}
               />
               <label for="name" class="form__label">

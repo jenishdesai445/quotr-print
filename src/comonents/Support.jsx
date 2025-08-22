@@ -6,12 +6,12 @@ const faq = [
     ans: 'We offer 1/4" and 1/8" radius round corners to all of our customers.',
   },
   {
-    que: "What is Product standard round corner radius?",
-    ans: 'We offer 1/4" and 1/8" radius round corners to all of our customers.',
+    que: "Do you offer custom sizes for products?",
+    ans: "Yes, we can manufacture products in custom sizes as per your requirements.",
   },
   {
-    que: "What is Product standard round corner radius?",
-    ans: 'We offer 1/4" and 1/8" radius round corners to all of our customers.',
+    que: "What materials are available for this product?",
+    ans: "Our products are available in paper, plastic, and premium vinyl materials.",
   },
 ];
 
@@ -52,35 +52,36 @@ const Support = () => {
           </div>
         </div>
       </div>
-      <div class="col-11 m-auto">
-        <p class="fs-1 fw-bold">FAQ's</p>
+      <div className="col-11 m-auto my-5">
+        <p className="fs-3 fw-bold text-center mb-4">FAQ's</p>
+
         {faq?.map((el, i) => {
           return (
-            <div class=" border rounded-2 mt-2">
+            <div className="border rounded-3 shadow-sm mt-3 overflow-hidden">
+              {/* Question */}
               <div
-                class="productDetailCollap rounded-2 p-2 px-3 d-flex align-items-center justify-content-between"
+                className="productDetailCollap bg-light px-3 py-2 d-flex align-items-center justify-content-between cursor-pointer"
                 data-bs-toggle="collapse"
                 href={`#specifition${i}`}
                 role="button"
                 aria-expanded="false"
                 aria-controls={`specifition${i}`}
               >
-                <div>
-                  <p>{el.que}</p>
-                </div>
-                <div>
-                  <i class="bi bi-chevron-down"></i>
-                </div>
+                <p className="m-0 fw-semibold fs-6">{el.que}</p>
+                <i className="bi bi-chevron-down fs-6"></i>
               </div>
-              <div class="collapse" id={`specifition${i}`}>
-                <div class="text-start p-2 px-4 ">
-                  <p class="">{el.ans}</p>
+
+              {/* Answer */}
+              <div className="collapse" id={`specifition${i}`}>
+                <div className="text-start p-3 bg-white">
+                  <p className="mb-0 text-muted small">{el.ans}</p>
                 </div>
               </div>
             </div>
           );
         })}
       </div>
+
       <br />
     </div>
   );

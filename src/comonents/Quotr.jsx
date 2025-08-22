@@ -614,7 +614,6 @@ const Quotr = () => {
                       <p class="text-center text-primary fw-semibold mb-2">
                         Get Free Access 16 Days
                       </p>
-                    
                     </div>
                   </div>
                 </div>

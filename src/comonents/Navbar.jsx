@@ -25,7 +25,7 @@ const Navbar = () => {
           <img
             src={require("../images/headerLogo.png")}
             onClick={() => navigate("/")}
-            style={{ height: "100%" }}
+            style={{ height: "100%", cursor: "pointer" }}
             alt=""
           />
         </div>
@@ -51,33 +51,37 @@ const Navbar = () => {
               //   Home
               // </p>
               <NavLink
-            to="/"
-            end
-            className={({ isActive }) =>
-              isActive && location.hash === ""
-                ? "nav-link active"
-                : "nav-link"
-            }
-          >
-            Home
-          </NavLink>
+                to="/"
+                end
+                className={({ isActive }) =>
+                  isActive && location.hash === ""
+                    ? "nav-link active"
+                    : "nav-link"
+                }
+              >
+                Home
+              </NavLink>
             )}
             {!token && (
-          <Link
-            to="/#features"
-            className={isHashActive("#features") ? "nav-link active" : "nav-link"}
-          >
-            Features
-          </Link>
-        )}
-              {!token && (
-          <Link
-            to="/#pricing"
-            className={isHashActive("#pricing") ? "nav-link active" : "nav-link"}
-          >
-            Pricing
-          </Link>
-        )}
+              <Link
+                to="/#features"
+                className={
+                  isHashActive("#features") ? "nav-link active" : "nav-link"
+                }
+              >
+                Features
+              </Link>
+            )}
+            {!token && (
+              <Link
+                to="/#pricing"
+                className={
+                  isHashActive("#pricing") ? "nav-link active" : "nav-link"
+                }
+              >
+                Pricing
+              </Link>
+            )}
             <NavLink
               to="/support"
               className={({ isActive }) =>

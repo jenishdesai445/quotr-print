@@ -199,9 +199,11 @@ const OrderList = () => {
                   {/* {user == 'false' && */}
                   <td className="text-nowrap fw-bold text-center">
                     <select
+                      style={{ cursor: "pointer" }}
                       className={`form-control fw-bold orderStatus${el.status}`}
                       key={i}
                       value={el.status}
+                      disabled={el.status === 4}
                       onChange={(e) =>
                         setUpdateStatus({
                           status: e.target.value,

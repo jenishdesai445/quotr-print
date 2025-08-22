@@ -19,11 +19,12 @@ const NewFooter = () => {
 
       <div class="col-11 m-auto mt-4 ">
         <div class="my-3 row align-items-center gap-md-0 gap-4">
-          <div class="col-md-6 text-md-start ">
+          <div class="col-md-6  text-md-start ">
             <img
               src={require("../images/footerLogo.png")}
-              style={{ height: "60px" }}
+              style={{ height: "60px", cursor: "pointer" }}
               alt=""
+              onClick={() => navigate("/")}
             />
             {/* <p class='mt-3' >Copyrights © 2024 <b>Quotr</b>. All Rights Reserved.</p> */}
           </div>

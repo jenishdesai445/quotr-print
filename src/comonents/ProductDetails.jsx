@@ -386,6 +386,7 @@ const ProductDetails = () => {
                 Step 2 : Order Confirmation
               </div>
             </div>
+
             {step == "step1" && (
               <div>
                 <div class="">
