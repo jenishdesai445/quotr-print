@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 
@@ -7,6 +7,8 @@ import "./style.css";
 
 const Navbar = () => {
   let token = localStorage.getItem("quotrUserToken");
+  const location = useLocation();
+  const isHashActive = (hash) => location.hash === hash;
 
   const navigate = useNavigate();
   const logout = () => {
@@ -49,38 +51,33 @@ const Navbar = () => {
               //   Home
               // </p>
               <NavLink
-                to="/"
-                className={({ isActive }) =>
-                  isActive ? "nav-link active" : "nav-link"
-                }
-              >
-                Home
-              </NavLink>
+            to="/"
+            end
+            className={({ isActive }) =>
+              isActive && location.hash === ""
+                ? "nav-link active"
+                : "nav-link"
+            }
+          >
+            Home
+          </NavLink>
             )}
             {!token && (
-              <NavLink
-                to="/#features"
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  cursor: "pointer",
-                }}
-              >
-                <p style={{ cursor: "pointer" }}>Features</p>
-              </NavLink>
-            )}
-            {!token && (
-              <Link
-                to="/#pricing"
-                style={{
-                  textDecoration: "none",
-                  color: "white",
-                  cursor: "pointer",
-                }}
-              >
-                <p style={{ cursor: "pointer" }}>Pricing</p>
-              </Link>
-            )}
+          <Link
+            to="/#features"
+            className={isHashActive("#features") ? "nav-link active" : "nav-link"}
+          >
+            Features
+          </Link>
+        )}
+              {!token && (
+          <Link
+            to="/#pricing"
+            className={isHashActive("#pricing") ? "nav-link active" : "nav-link"}
+          >
+            Pricing
+          </Link>
+        )}
             <NavLink
               to="/support"
               className={({ isActive }) =>

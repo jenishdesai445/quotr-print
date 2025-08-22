@@ -551,119 +551,144 @@ const Quotr = () => {
       </div>
 
       <div>
-        <div class="col-11 m-auto my-5 pricing" id="pricing">
-          <div
-            class="position-relative m-auto"
-            style={{ width: "fit-content" }}
-          >
-            <img
-              class="position-absolute"
-              style={{
-                width: "100px",
-                top: "-30px",
-                left: "-100px",
-                zIndex: "0",
-              }}
-              src={require("../images/tringel.png")}
-              alt=""
-            />
+        {token ? (
+          <div className="col-11 m-auto my-5 pricing" id="pricing">
+            <div
+              className="position-relative m-auto"
+              style={{ width: "fit-content" }}
+            >
+              <img
+                className="position-absolute"
+                style={{
+                  width: "100px",
+                  top: "-30px",
+                  left: "-100px",
+                  zIndex: "0",
+                }}
+                src={require("../images/tringel.png")}
+                alt=""
+              />
 
-            <p class="fs-1 fw-bold" data-aos="fade-up">
-              {" "}
-              Quotr <span style={{ color: "#0094DE" }}>
-                Pricing & Plans
-              </span>{" "}
-            </p>
-          </div>
-          {/* <p class='fs-5 fw-bold col-lg-8 m-auto' data-aos="fade-up">Discover the ideal plan to fuel your business growth. Our pricing options are carefully crafted to cater to business.</p> */}
-        </div>
+              {/* Heading for token */}
+              <p className="fs-1 fw-bold" data-aos="fade-up">
+                Your Plan
+              </p>
+            </div>
 
-        {/* <div class=" d-flex align-items-center justify-content-center m-auto row gap-3 my-5">
-          {subscription?.map((el) => {
-            return (
-              <div class="" data-aos="fade-up" style={{ width: "fit-content" }}>
-                <div class="text-start m-auto rounded-4 p-3 fw-bold planCard">
-                  <div class="col-11 m-auto">
+            {/* Sub text */}
+            {/* <p
+              className="fs-5 fw-bold col-lg-8 m-auto text-success"
+              data-aos="fade-up"
+            >
+              Get Free Access 16 Days
+            </p> */}
+
+          
+            <div className="d-flex align-items-center justify-content-center m-auto row gap-3 my-5">
+              <div data-aos="fade-up" style={{ width: "fit-content" }}>
+                <div className="text-start m-auto rounded-4 p-3 fw-bold planCard">
+                  <div className="col-11 m-auto">
                     <div>
-                      <p class="mt-3 fs-4 fw-bold">{el.name}</p>
-
-                      <p style={{}}>Max Store : {el.allow_login}</p>
-
+                      <p className="mt-3 fs-4 fw-bold">
+                        {subscription?.[0]?.name}
+                      </p>
+                      <p>Max Store : {subscription?.[0]?.allow_login}</p>
                       <p>
-                        <span class="fs-1">$ {el?.price}</span>{" "}
+                        <span className="fs-1 text-success">
+                          ${subscription?.[0]?.price || 4.99}
+                        </span>{" "}
                         <span style={{ fontSize: "12px" }}>per month</span>
                       </p>
                     </div>
                     <hr />
 
-                    {!token && (
-                      <div class="m-auto my-2" style={{ width: "fit-content" }}>
-                        <button
-                          class="homeTopBtn "
-                          onClick={() =>
-                            navigate("/sign-up", { state: { plan: { el } } })
-                          }
-                        >
-                          Sign Up{" "}
-                        </button>
-                      </div>
-                    )}
+                    <p class="text-center text-primary fw-semibold mb-2">
+                      Get Free Access 16 Days
+                    </p>
                   </div>
                 </div>
               </div>
-            );
-          })}
-        </div> */}
-        <div class="d-flex align-items-center justify-content-center m-auto row gap-3 my-5">
-          {subscription?.map((el, i) => {
-            return (
-              <div key={i} data-aos="fade-up" style={{ width: "fit-content" }}>
-                <div class="text-start m-auto rounded-4 p-3 fw-bold planCard">
-                  <div class="col-11 m-auto">
-                    <div>
-                      <p class="mt-3 fs-4 fw-bold">{el.name}</p>
+            </div>
+          </div>
+        ) : (
+          <div className="col-11 m-auto my-5 pricing" id="pricing">
+            <div
+              className="position-relative m-auto"
+              style={{ width: "fit-content" }}
+            >
+              <img
+                className="position-absolute"
+                style={{
+                  width: "100px",
+                  top: "-30px",
+                  left: "-100px",
+                  zIndex: "0",
+                }}
+                src={require("../images/tringel.png")}
+                alt=""
+              />
 
-                      <p>Max Store : {el.allow_login}</p>
+              {/* Heading for no token */}
+              <p className="fs-1 fw-bold" data-aos="fade-up">
+                Quotr <span style={{ color: "#0094DE" }}>Pricing & Plans</span>
+              </p>
+            </div>
 
-                      <p>
-                        {/* {el?.old_price && ( */}
-                        <span
-                          style={{
-                            textDecoration: "line-through",
-                            color: "#888",
-                            marginRight: "8px",
-                            fontSize: "18px",
-                          }}
-                        >
-                          {/* ${el?.old_price} */}${el?.price}
-                        </span>
-                        {/* )} */}
-                        {/* <span class="fs-1 text-success">${el?.price}</span>{" "} */}
-                        <span class="fs-1 text-success">${4.99}</span>{" "}
-                        <span style={{ fontSize: "12px" }}>per month</span>
+            {/* Multiple Plans */}
+            <div className="d-flex align-items-center justify-content-center m-auto row gap-3 my-5">
+              {subscription?.map((el, i) => (
+                <div
+                  key={i}
+                  data-aos="fade-up"
+                  style={{ width: "fit-content" }}
+                >
+                  <div className="text-start m-auto rounded-4 p-3 fw-bold planCard">
+                    <div className="col-11 m-auto">
+                      <div>
+                        <p className="mt-3 fs-4 fw-bold">{el.name}</p>
+                        <p>Max Store : {el.allow_login}</p>
+                        <p>
+                          <span
+                            style={{
+                              textDecoration: "line-through",
+                              color: "#888",
+                              marginRight: "8px",
+                              fontSize: "18px",
+                            }}
+                          >
+                            ${el?.price}
+                          </span>
+                          <span className="fs-1 text-success">${4.99}</span>{" "}
+                          <span style={{ fontSize: "12px" }}>per month</span>
+                        </p>
+                      </div>
+                      <hr />
+
+                      <p class="text-center text-primary fw-semibold mb-2">
+                        Get Free Access 16 Days
                       </p>
-                    </div>
-                    <hr />
-
-                    <div class="m-auto my-2" style={{ width: "fit-content" }}>
-                      {!token && (
+                      <div
+                        className="m-auto my-2"
+                        style={{ width: "fit-content" }}
+                      >
                         <button
-                          class="homeTopBtn"
+                          className="homeTopBtn"
                           onClick={() =>
                             navigate("/sign-up", { state: { plan: el } })
                           }
                         >
                           Sign Up
                         </button>
-                      )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
+
       <br />
 
       <div

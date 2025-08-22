@@ -90,7 +90,12 @@ const Contact = () => {
                   <div>
                     <i class="bi bi-envelope-fill"></i>
                   </div>
-                  <div>info@quotrprint.com</div>
+                  <a
+                    href="mailto:info@quotrprint.com"
+                    className=" text-decoration-none text-white"
+                  >
+                    info@quotrprint.com
+                  </a>
                 </div>
 
                 <div class="d-flex gap-3 mt-2">

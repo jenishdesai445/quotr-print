@@ -75,6 +75,8 @@ const MyStore = () => {
         <button
           class="homeTopBtn px-4 p-2"
           onClick={() => navigate("/add-users")}
+          disabled={myStoreData?.length >= 5}
+         
         >
           Add User/Store
         </button>

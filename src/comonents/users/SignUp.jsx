@@ -15,6 +15,14 @@ const API_key = `AIzaSyAvzHK00m3gO1-hBanLOTHn9wNE_BUgdMw`;
 
 const SignUp = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  let token = localStorage.getItem("quotrUserToken");
+  useEffect(() => {
+      if (token ) {
+        navigate("/dashboard");
+      }
+    }, [token]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -42,8 +50,6 @@ const SignUp = () => {
   const [tc, setTc] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [showAllFields, setShowAllFields] = useState(false);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {

@@ -90,7 +90,7 @@ const UperFooter = () => {
               <br />
             </div>
           </div>
-          <div class="col-lg-9 col-md-7    ">
+          <div class="col-lg-9 col-md-7 ">
             <br />
             <Testimonial data={testi()} />
             <br />
