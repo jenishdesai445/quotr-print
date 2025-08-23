@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MapContainer from "./Maps";
 import axios from "axios";
 
@@ -14,14 +14,14 @@ import "react-phone-input-2/lib/style.css";
 const API_key = `AIzaSyAvzHK00m3gO1-hBanLOTHn9wNE_BUgdMw`;
 
 const SignUp = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   let token = localStorage.getItem("quotrUserToken");
+
   useEffect(() => {
-      if (token ) {
-        navigate("/dashboard");
-      }
-    }, [token]);
+    if (token) {
+      navigate("/dashboard");
+    }
+  }, [token]);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -32,17 +32,15 @@ const SignUp = () => {
     address: "",
     latitude: null,
     longitude: null,
-    plan: "",
-    price: "",
+    plan: "", // Plan ID yahan store hogi
   });
+
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const details = location?.state?.plan?.el;
   const [searchAdd, setSearchAdd] = useState("");
   const [position, setPosition] = useState();
   const [showMap, setShowMap] = useState(false);
-  const [adminDetails, setAdminDetails] = useState({});
   const { setIsLoading } = useLoading();
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(false);
@@ -50,6 +48,62 @@ const SignUp = () => {
   const [tc, setTc] = useState(false);
   const [emailVerified, setEmailVerified] = useState(false);
   const [showAllFields, setShowAllFields] = useState(false);
+
+  // NEW: States for subscription plans and OTP timer
+  const [subscriptionPlans, setSubscriptionPlans] = useState([]);
+  const [timer, setTimer] = useState(0);
+  const [canResend, setCanResend] = useState(false);
+
+  // Fetch plans on component mount
+  useEffect(() => {
+    const getSubscriptionPlan = async () => {
+      setIsLoading(true);
+      try {
+        const response = await axios.get(
+          `https://bp.quotrprint.com/api/subscriptionPlan`
+        );
+        const plans = response.data?.data;
+        setSubscriptionPlans(plans);
+
+        // If there's only one plan, pre-select it
+        if (plans && plans.length === 1) {
+          setFormData((prev) => ({
+            ...prev,
+            plan: plans[0].id,
+          }));
+        }
+        setIsLoading(false);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error);
+        Swal.fire({
+          title: "Error!",
+          text: "Could not fetch subscription plans.",
+          icon: "error",
+          confirmButtonText: "ok",
+        });
+      }
+    };
+    getSubscriptionPlan();
+  }, [setIsLoading]); // Run only once
+
+  // OTP Timer Logic
+  useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else if (timer === 0 && otpSent) {
+      setCanResend(true);
+    }
+    return () => clearInterval(interval);
+  }, [timer, otpSent]);
+
+  const startTimer = () => {
+    setTimer(60); // 60 seconds
+    setCanResend(false);
+  };
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -87,7 +141,6 @@ const SignUp = () => {
       setErrors((prev) => ({ ...prev, address: "Address is required" }));
       return;
     }
-
     setShowMap(true);
     axios
       .get(
@@ -137,13 +190,9 @@ const SignUp = () => {
     const { name, value } = e.target;
     setFormData((prev) => {
       const updatedForm = { ...prev, [name]: value };
-
-      // Clear error when user starts typing
       if (errors[name]) {
         setErrors((prevErrors) => ({ ...prevErrors, [name]: "" }));
       }
-
-      // Validate email format in real-time
       if (name === "email" && value) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(value)) {
@@ -153,13 +202,9 @@ const SignUp = () => {
           }));
         }
       }
-
-      // Validate password in real-time
       if (name === "password") {
         validatePassword(value);
       }
-
-      // ✅ FIX: Check passwords match using updatedForm (not old formData)
       if (updatedForm.password && updatedForm.confirmPassword) {
         if (updatedForm.password !== updatedForm.confirmPassword) {
           setErrors((prevErrors) => ({
@@ -170,14 +215,22 @@ const SignUp = () => {
           setErrors((prevErrors) => ({ ...prevErrors, confirmPassword: "" }));
         }
       }
-
       return updatedForm;
     });
   };
 
+  const validatePassword = (password) => {
+    return {
+      length: password?.length >= 8,
+      lowercase: /[a-z]/.test(password),
+      uppercase: /[A-Z]/.test(password),
+      number: /[0-9]/.test(password),
+      specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+    };
+  };
+
   const validateForm = () => {
     const newErrors = {};
-
     if (!formData.name.trim()) newErrors.name = "Name is required";
     if (!formData.email.trim()) newErrors.email = "Email is required";
     if (!formData.phone) newErrors.phone = "Phone is required";
@@ -185,62 +238,32 @@ const SignUp = () => {
     if (!formData.password) newErrors.password = "Password is required";
     if (!formData.confirmPassword)
       newErrors.confirmPassword = "Please confirm your password";
-    if (
-      formData.password &&
-      formData.confirmPassword &&
-      formData.password !== formData.confirmPassword
-    )
+    if (formData.password && formData.password !== formData.confirmPassword)
       newErrors.confirmPassword = "Passwords do not match";
-
     if (!formData.latitude || !formData.longitude)
       newErrors.address = "Please select a valid address";
-
     if (!tc) newErrors.tc = "You must agree to the terms and conditions";
     if (!emailVerified) newErrors.email = "Email must be verified";
-
-    // Password rules
+    if (!formData.plan) newErrors.plan = "Please select a subscription plan"; // Plan validation
     const passwordValidation = validatePassword(formData.password || "");
-    if (!Object.values(passwordValidation).every(Boolean)) {
+    if (!Object.values(passwordValidation).every(Boolean))
       newErrors.password = "Password does not meet requirements";
-    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const validatePassword = (password) => {
-    const validation = {
-      length: password?.length >= 8,
-      lowercase: /[a-z]/.test(password),
-      uppercase: /[A-Z]/.test(password),
-      number: /[0-9]/.test(password),
-      specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-    };
-
-    return validation;
-  };
-
-  useEffect(() => {
-    const admin = {
-      ...formData,
-      plan: details?.id,
-      price: details?.name,
-    };
-    setAdminDetails(admin);
-  }, [formData, details]);
-
   const handleSubmit = () => {
     if (!validateForm()) return;
-
     setIsLoading(true);
-
-    // ✅ Map `confirmPassword` -> `password_confirmation`
     const { confirmPassword, ...rest } = formData;
+    const selectedPlan = subscriptionPlans.find((p) => p.id === formData.plan);
     const adminData = {
       ...rest,
-      password_confirmation: confirmPassword, // <-- backend expects this
-      plan: details?.id,
-      price: details?.name,
+      password_confirmation: confirmPassword,
+
+      plan: selectedPlan ? selectedPlan.name : "",
+      price: selectedPlan ? selectedPlan.price : "",
     };
 
     axios
@@ -253,38 +276,19 @@ const SignUp = () => {
             text: res?.data?.message,
             icon: "success",
             confirmButtonText: "ok",
-          });
-          navigate("/log-in");
+          }).then(() => navigate("/log-in"));
         }
       })
       .catch((err) => {
         setIsLoading(false);
         let errorMessage = "An error occurred during registration";
-
-        // ✅ Field-wise server errors ko UI par set karo
         if (err?.response?.data?.errors) {
           const serverErrors = err.response.data.errors;
-
-          setErrors((prev) => ({
-            ...prev,
-            // Laravel may send: errors.password, errors.password_confirmation, etc.
-            password: serverErrors.password?.[0] || prev.password || "",
-            confirmPassword:
-              serverErrors.password_confirmation?.[0] ||
-              prev.confirmPassword ||
-              "",
-            email: serverErrors.email?.[0] || prev.email || "",
-            name: serverErrors.name?.[0] || prev.name || "",
-            phone: serverErrors.phone?.[0] || prev.phone || "",
-            address: serverErrors.address?.[0] || prev.address || "",
-          }));
-
-          // Optional: combine all messages for the toast
+          setErrors((prev) => ({ ...prev, ...serverErrors }));
           errorMessage = Object.values(serverErrors).flat().join(", ");
         } else if (err?.response?.data?.message) {
           errorMessage = err.response.data.message;
         }
-
         Swal.fire({
           title: "Error!",
           text: errorMessage,
@@ -302,8 +306,6 @@ const SignUp = () => {
       });
       return;
     }
-
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) {
       setErrors((prev) => ({ ...prev, email: "Invalid email format" }));
@@ -311,45 +313,32 @@ const SignUp = () => {
     }
 
     setIsLoading(true);
-
     axios
       .post(`https://bp.quotrprint.com/api/sendOTP`, {
         name: formData.name,
         email: formData.email,
       })
       .then((res) => {
+        setIsLoading(false);
         if (res?.data?.success) {
           Swal.fire({
             text: res?.data?.message,
             icon: "success",
             confirmButtonText: "ok",
           });
-          setIsLoading(false);
           setOtpSent(true);
+          startTimer(); // Start timer on success
           setErrors((prev) => ({ ...prev, email: "" }));
         } else {
-          // Handle case where email is already verified/registered
-          if (res?.data?.message?.includes("Email already verification done")) {
-            Swal.fire({
-              title: "Already Registered",
-              text: "Your email is already verified. Please login to access your account.",
-              icon: "info",
-              confirmButtonText: "Go to Login",
-            }).then(() => {
-              navigate("/log-in");
-            });
-          } else {
-            Swal.fire({
-              text: res?.data?.message,
-              icon: "error",
-              confirmButtonText: "ok",
-            });
-          }
-          setIsLoading(false);
+          Swal.fire({
+            text: res?.data?.message,
+            icon: "error",
+            confirmButtonText: "ok",
+          });
         }
       })
       .catch((err) => {
-        // Handle case where email is already verified/registered
+        setIsLoading(false);
         if (
           err?.response?.data?.message?.includes(
             "Email already verification done"
@@ -357,23 +346,24 @@ const SignUp = () => {
         ) {
           Swal.fire({
             title: "Already Registered",
-            text: "Your email is already verified. Please login to access your account.",
+            text: "This email is already verified. Please login.",
             icon: "info",
             confirmButtonText: "Go to Login",
-          }).then(() => {
-            navigate("/log-in");
-          });
+          }).then(() => navigate("/log-in"));
         } else {
           Swal.fire({
-            text:
-              err?.response?.data?.message ||
-              "Error sending verification email",
+            text: err?.response?.data?.message || "Error sending OTP",
             icon: "error",
             confirmButtonText: "ok",
           });
         }
-        setIsLoading(false);
       });
+  };
+
+  const handleResendOtp = () => {
+    if (canResend) {
+      verifyEmail(); // Reuse the verifyEmail function
+    }
   };
 
   const verifyOtp = () => {
@@ -385,7 +375,6 @@ const SignUp = () => {
       });
       return;
     }
-
     setIsLoading(true);
     axios
       .post(`https://bp.quotrprint.com/api/verificationOTP`, {
@@ -393,11 +382,11 @@ const SignUp = () => {
         email: formData.email,
       })
       .then((res) => {
+        setIsLoading(false);
         if (res?.data?.success) {
-          setIsLoading(false);
           setOtpVerified(true);
           setEmailVerified(true);
-          setShowAllFields(true); // Show all fields after verification
+          setShowAllFields(true);
           setErrors((prev) => ({ ...prev, email: "" }));
           Swal.fire({
             text: "Email verified successfully!",
@@ -410,7 +399,6 @@ const SignUp = () => {
             icon: "error",
             confirmButtonText: "ok",
           });
-          setIsLoading(false);
         }
       })
       .catch((err) => {
@@ -424,11 +412,8 @@ const SignUp = () => {
   };
 
   const passwordValidation = validatePassword(formData.password);
-  const allValid = Object.values(passwordValidation).every(Boolean);
-
-  // Check if form is valid for submit button
   const isFormValid = () => {
-    const result =
+    return (
       formData.name.trim() &&
       formData.email.trim() &&
       formData.phone &&
@@ -436,13 +421,13 @@ const SignUp = () => {
       formData.password &&
       formData.confirmPassword &&
       formData.password === formData.confirmPassword &&
-      allValid &&
+      Object.values(passwordValidation).every(Boolean) &&
       emailVerified &&
       tc &&
+      formData.plan && // Check if plan is selected
       formData.latitude &&
-      formData.longitude;
-
-    return result;
+      formData.longitude
+    );
   };
 
   return (
@@ -451,7 +436,6 @@ const SignUp = () => {
         <meta charSet="utf-8" />
         <title>Registration Process</title>
       </Helmet>
-
       <div className="my-5">
         <div className="col-lg-6 col-md-8 col-11 m-auto text-start ">
           <div className="border p-2 border-primary rounded-4 mt-4">
@@ -481,6 +465,7 @@ const SignUp = () => {
 
               <p className="mt-2">Email</p>
               <p className="text-secondary" style={{ fontSize: "12px" }}>
+                {" "}
                 (Store owner's email is for billing and admin access. Do not use
                 store email address until setting up "My Store")
               </p>
@@ -504,34 +489,73 @@ const SignUp = () => {
                 <button
                   className="btn btn-primary p-1 px-2"
                   onClick={verifyEmail}
-                  disabled={emailVerified}
+                  disabled={emailVerified || timer > 0}
                 >
                   {emailVerified ? "Verified" : "Verify"}
                 </button>
               </div>
 
+              {/* UPDATED: OTP Section with Timer and Resend button */}
               {otpSent && !emailVerified && (
-                <div className="mt-2">
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    name="otp"
-                    onChange={(e) => setOtp(e.target.value)}
-                  />
-                  <button
-                    className="btn btn-outline-primary mt-2"
-                    onClick={verifyOtp}
-                  >
-                    Verify OTP
-                  </button>
+                <div className="mt-3 border p-3 rounded">
+                  <p>We've sent an OTP to your email. Please enter it below.</p>
+                  <div className="d-flex gap-2">
+                    <input
+                      className="form-control"
+                      type="text"
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                    />
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={verifyOtp}
+                    >
+                      Verify OTP
+                    </button>
+                  </div>
+                  <div className="mt-2 text-center">
+                    {timer > 0 ? (
+                      <p className="text-secondary">
+                        Resend OTP in {timer} seconds
+                      </p>
+                    ) : (
+                      <button
+                        className="btn btn-link p-0"
+                        onClick={handleResendOtp}
+                        disabled={!canResend}
+                      >
+                        Resend OTP
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
 
-              {/* Show other fields only after email verification */}
               {showAllFields && (
                 <>
+                  {/* NEW: Subscription Plan Dropdown */}
+                  <p className="mt-2">Subscription Plan</p>
+                  <select
+                    className={`form-select ${errors.plan ? "is-invalid" : ""}`}
+                    name="plan"
+                    value={formData.plan}
+                    onChange={handleInputChange}
+                    disabled={subscriptionPlans.length === 1}
+                  >
+                    {subscriptionPlans.length > 1 && (
+                      <option value="">-- Select a Plan --</option>
+                    )}
+                    {subscriptionPlans.map((plan) => (
+                      <option key={plan.id} value={plan.id}>
+                        {plan.name} - ${plan.price}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.plan && (
+                    <div className="text-danger small">{errors.plan}</div>
+                  )}
+
                   <p className="mt-2">Phone</p>
                   <div className={errors.phone ? "is-invalid" : ""}>
                     <PhoneInput
@@ -547,11 +571,11 @@ const SignUp = () => {
                     <div className="text-danger small">{errors.phone}</div>
                   )}
 
+                  {/* Rest of the form fields */}
                   <p className="mt-2">Full Address</p>
                   <p className="text-secondary" style={{ fontSize: "12px" }}>
                     (Address, City, State, Zip)
                   </p>
-
                   <div className="input-group mb-3 mt-1 ">
                     <input
                       className={`form-control ${
@@ -574,7 +598,6 @@ const SignUp = () => {
                   {errors.address && (
                     <div className="text-danger small">{errors.address}</div>
                   )}
-
                   {showMap && (
                     <div>
                       <p
@@ -619,7 +642,6 @@ const SignUp = () => {
                   {errors.password && (
                     <div className="text-danger small">{errors.password}</div>
                   )}
-
                   <ul className="list-unstyled d-flex gap-2 flex-wrap">
                     {Object.entries(passwordValidation).map(
                       ([key, isValid]) => (
@@ -680,12 +702,14 @@ const SignUp = () => {
                       onChange={() => setTc(!tc)}
                     />
                     <label className="form-check-label" htmlFor="t&c">
+                      {" "}
                       AGREE Terms & Conditions{" "}
                       <a
                         href="/terms-conditions"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
+                        {" "}
                         Check T&C
                       </a>
                     </label>
