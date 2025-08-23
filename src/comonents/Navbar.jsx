@@ -86,6 +86,7 @@ const Navbar = () => {
               to="/support"
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
+              
               }
             >
               Support

@@ -11,6 +11,9 @@ import Swal from "sweetalert2";
 import ExpresionAtribute from "./ExpresionAtribute";
 import ProductAttribute2 from "./ProductAttribute2";
 
+import AOS from "aos";
+import "aos/dist/aos.css";
+
 const ProductDetails = () => {
   const location = useLocation();
   const [productData, setProductData] = useState();
@@ -277,6 +280,13 @@ const ProductDetails = () => {
     }
   };
 
+  useEffect(() => {
+    AOS.init({
+      duration: 2000, // animation duration
+      once: false, // ek hi bar chale scroll pe
+    });
+  }, []);
+
   // console.log(shippmentNeed);
   useEffect(() => {
     setTotalTax(
@@ -344,9 +354,22 @@ const ProductDetails = () => {
 
       <div class="col-11 m-auto row mt-3 gap-lg-0 gap-4 mb-3">
         <div class="col-lg-5  ProductSlider rounded-3 ">
-          <div class="text-center my-3">
-            <p class="h1">{productData?.name}</p>
+          <div data-aos="zoom-in" className="text-center my-5">
+            <p
+              className="h1 fw-bold position-relative d-inline-block"
+              style={{
+                background: "linear-gradient(90deg, #0d6efd, #6610f2)",
+                WebkitBackgroundClip: "text",
+                color: "transparent",
+                position: "relative",
+                textShadow: "2px 2px 8px rgba(0,0,0,0.2)",
+                letterSpacing: "1px",
+              }}
+            >
+              {productData?.name}
+            </p>
           </div>
+
           {/* <ProductDetailsCarousel data={productData?.images} /> */}
           <div
             class="col-xxl-11 col-xl-9 col-lg-11  col-md-6   m-auto  "

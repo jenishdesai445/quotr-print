@@ -1,20 +1,26 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MapContainer from "./Maps";
 import "../style.css";
 import { Helmet } from "react-helmet";
 import { useLoading } from "../LoadingContext ";
 import Swal from "sweetalert2";
 
 const MyStore = () => {
-  const [myStoreData, setMyStoreData] = useState();
+   const [errors, setErrors] = useState({});
+  const [showMap, setShowMap] = useState(false);
+  const [position, setPosition] = useState();
+
+  const [myStoreData, setMyStoreData] = useState([]);
+  const [selectedStore, setSelectedStore] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   let token = localStorage.getItem("quotrUserToken");
-  let userId = localStorage.getItem("quotrUserId");
   let customerId = localStorage.getItem("quotrCustomerId");
   const notAdmin = localStorage.getItem("quotrUserControl");
 
   const { setIsLoading } = useLoading();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,28 +33,108 @@ const MyStore = () => {
       });
       navigate("/dashboard");
     } else {
-      setIsLoading(true);
-      if (customerId) {
-        axios
-          .post(
-            `https://bp.quotrprint.com/api/companyList`,
-            { customerId: customerId },
-            { headers: { Authorization: `Bearer ${token}` } }
-          )
-          .then((res) => {
-            // console.log(res.data);
-            setMyStoreData(res?.data?.data);
-            setIsLoading(false);
-          })
-          .catch((err) => {
-            setIsLoading(false);
-            // console.log(err);
-          });
-      }
+      fetchStores();
     }
   }, [customerId, token]);
 
-  // console.log(myStoreData);
+  useEffect(() => {
+    if (position) {
+      setSelectedStore((prev) => ({
+        ...prev,
+        latitude: position.lat,
+        longitude: position.lng,
+      }));
+    }
+  }, [position]);
+
+  const API_key = `AIzaSyAvzHK00m3gO1-hBanLOTHn9wNE_BUgdMw`; // apna API key daalo
+
+  const searchCity = () => {
+    if (!selectedStore.address?.trim()) {
+      setErrors((prev) => ({ ...prev, address: "Address is required" }));
+      return;
+    }
+
+    setShowMap(true);
+    axios
+      .get(
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+          selectedStore.address
+        )}&key=${API_key}`
+      )
+      .then((response) => {
+        const result = response?.data?.results;
+        if (result && result.length > 0) {
+          setSelectedStore((prev) => ({
+            ...prev,
+            latitude: result[0]?.geometry?.location?.lat,
+            longitude: result[0]?.geometry?.location?.lng,
+          }));
+          setErrors((prev) => ({ ...prev, address: "" }));
+        } else {
+          setErrors((prev) => ({ ...prev, address: "Address not found" }));
+        }
+      })
+      .catch(() => {
+        setErrors((prev) => ({ ...prev, address: "Error searching address" }));
+      });
+  };
+
+  const fetchStores = () => {
+    setIsLoading(true);
+    if (customerId) {
+      axios
+        .post(
+          `https://bp.quotrprint.com/api/companyList`,
+          { customerId: customerId },
+          { headers: { Authorization: `Bearer ${token}` } }
+        )
+        .then((res) => {
+          setMyStoreData(res?.data?.data);
+          setIsLoading(false);
+        })
+        .catch(() => setIsLoading(false));
+    }
+  };
+
+  const handleUpdateClick = (store) => {
+    setSelectedStore(store);
+    setShowModal(true);
+  };
+
+  const handleUpdateSubmit = (e) => {
+    e.preventDefault();
+
+    const payload = {
+      id: selectedStore.id,
+      name: selectedStore.name,
+      email: selectedStore.email,
+      phone: selectedStore.phone,
+      store_no: selectedStore.store_no,
+      company_name: selectedStore.company_name,
+      address: selectedStore.address,
+      latitude: selectedStore.latitude,
+      longitude: selectedStore.longitude,
+    };
+
+    axios
+      .post(`https://bp.quotrprint.com/api/updateStoreUser`, payload, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
+        Swal.fire("Success", "Store updated successfully", "success");
+        setShowModal(false);
+        fetchStores();
+      })
+      .catch(() => Swal.fire("Error", "Failed to update", "error"));
+  };
+
+  const handleChange = (e) => {
+    setSelectedStore({
+      ...selectedStore,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   return (
     <div>
@@ -57,77 +143,262 @@ const MyStore = () => {
         <title>My-Store</title>
       </Helmet>
 
-      <div class="mt-3 col-11 m-auto text-start">
-        <div class="d-flex align-items-center justify-content-between">
+      <div className="mt-3 col-11 m-auto text-start">
+        <div className="d-flex align-items-center justify-content-between">
           <div>
-            <p class="fs-1 fw-bold my-3">My Store</p>
+            <p className="fs-1 fw-bold my-3">My Store</p>
           </div>
           <div>
             <p
               onClick={() => navigate("/dashboard")}
               style={{ cursor: "pointer" }}
             >
-              <i class="bi bi-arrow-left-circle fs-2 fw-bold"></i>
+              <i className="bi bi-arrow-left-circle fs-2 fw-bold"></i>
             </p>
           </div>
         </div>
         <hr />
         <button
-          class="homeTopBtn px-4 p-2"
+          className="homeTopBtn px-4 p-2"
           onClick={() => navigate("/add-users")}
           disabled={myStoreData?.length >= 5}
-         
         >
           Add User/Store
         </button>
 
-        <div class="row  my-4  justify-content-center ">
-          {myStoreData?.map((el) => {
-            return (
-              <div class=" col-lg-4 col-md-6  col-11   text-start   mt-4">
-                <div class="col-11 m-auto border border-primary rounded-4 p-2 h-100">
-                  <div class="">
-                    <p class="fs-3 fw-bold my-2">{el.company_name}</p>
-                  </div>
-                  <div class="d-flex ">
-                    <div class="fw-bold" style={{ width: "80px" }}>
-                      Name
-                    </div>
-                    <div class="fw-semibold">
-                      - {el.name}{" "}
-                      <span style={{ fontSize: "14px", fontWeight: "bold" }}>
-                        ({el.cust_type})
-                      </span>{" "}
-                    </div>
-                  </div>
-                  <div class="d-flex ">
-                    <div class="fw-bold" style={{ width: "80px" }}>
-                      Email
-                    </div>
-                    <div class="fw-semibold">- {el.email}</div>
-                  </div>
-                  <div class="d-flex ">
-                    <div class="fw-bold" style={{ width: "80px" }}>
-                      Phone
-                    </div>
-                    <div class="fw-semibold">- {el.phone}</div>
-                  </div>
-                  <div class="d-flex ">
-                    <div class="fw-bold" style={{ width: "80px" }}>
-                      Address
-                    </div>
-                    <div class="fw-semibold">- {el.address}</div>
-                  </div>
-                  {/* <div class='text-center mb-2'>
+        <div className="row my-4 g-4 justify-content-center">
+          {myStoreData?.map((el) => (
+            <div key={el.id} className="col-lg-4 col-md-6 col-sm-10">
+              <div className="card border-2 shadow-sm rounded-4 h-100 position-relative hover-card">
+                {/* Update Button (Top Right) */}
+                <button
+                  className="btn btn-sm btn-light border position-absolute rounded-circle shadow-sm"
+                  style={{ top: "12px", right: "12px" }}
+                  onClick={() => handleUpdateClick(el)}
+                >
+                  <i className="bi bi-pencil-square text-primary"></i>
+                </button>
 
-                                            <button class="homeTopBtn px-4 p-2 " >Edit <i class="bi bi-pencil-fill mx-2"></i></button>
-                                        </div> */}
+                <div className="card-body">
+                  {/* Company Name */}
+                  <h5 className="card-title fw-bold text-primary mb-3">
+                    {el.company_name}
+                  </h5>
+
+                  {/* Info Rows */}
+                  <p className="mb-2">
+                    <span className="fw-bold me-2">Name:</span>
+                    {el.name}{" "}
+                    <span className="badge bg-light text-dark ms-2">
+                      {el.cust_type}
+                    </span>
+                  </p>
+                  <p className="mb-2">
+                    <span className="fw-bold me-2">Email:</span>
+                    {el.email}
+                  </p>
+                  <p className="mb-2">
+                    <span className="fw-bold me-2">Phone:</span>
+                    {el.phone}
+                  </p>
+                  <p className="mb-0">
+                    <span className="fw-bold me-2">Address:</span>
+                    {el.address}
+                  </p>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Modal */}
+      {showModal && selectedStore && (
+        <div
+          className="modal show fade d-block"
+          tabIndex="-1"
+          style={{ background: "rgba(0,0,0,0.5)" }}
+        >
+          {/* 👇 margin-top fix for navbar spacing */}
+          <div className="modal-dialog modal-lg" style={{ marginTop: "100px" }}>
+            <div className="modal-content border-0 shadow-lg rounded-4">
+              {/* Header */}
+              <div className="modal-header border-0">
+                <h5 className="modal-title fw-bold text-primary">
+                  Update Store
+                </h5>
+                <button
+                  type="button"
+                  className="btn-close"
+                  onClick={() => setShowModal(false)}
+                ></button>
+              </div>
+
+              {/* Form */}
+              <form onSubmit={handleUpdateSubmit}>
+                <div className="modal-body">
+                  <div className="row g-4 text-start">
+                    {/* Store ID */}
+                    <div className="col-md-6 ">
+                      <label className="form-label fw-semibold">
+                        Store ID <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="id"
+                        value={selectedStore.id || ""}
+                        onChange={handleChange}
+                        placeholder="Enter store ID"
+                      />
+                    </div>
+
+                    {/* Name */}
+                    <div className="col-md-6">
+                      <label className="form-label fw-semibold">
+                        Name <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="name"
+                        value={selectedStore.name || ""}
+                        onChange={handleChange}
+                        placeholder="Enter name"
+                      />
+                    </div>
+
+                    {/* Email */}
+                    <div className="col-md-6">
+                      <label className="form-label fw-semibold">
+                        Email <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="email"
+                        className="form-control bg-light"
+                        value={selectedStore.email || ""}
+                        name="email"
+                        readOnly
+                      />
+                    </div>
+
+                    {/* Phone */}
+                    <div className="col-md-6">
+                      <label className="form-label fw-semibold">
+                        Phone <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="phone"
+                        value={selectedStore.phone || ""}
+                        onChange={handleChange}
+                        placeholder="Enter phone number"
+                      />
+                    </div>
+
+                    {/* Store No */}
+                    <div className="col-md-6">
+                      <label className="form-label fw-semibold">
+                        Store No <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="store_no"
+                        value={selectedStore.store_no || ""}
+                        onChange={handleChange}
+                        placeholder="Enter store no"
+                      />
+                    </div>
+
+                    {/* Company Name */}
+                    <div className="col-md-6">
+                      <label className="form-label fw-semibold">
+                        Company Name <span className="text-danger">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        name="company_name"
+                        value={selectedStore.company_name || ""}
+                        onChange={handleChange}
+                        placeholder="Enter company name"
+                      />
+                    </div>
+
+                   
+
+                   
+
+                   
+                    {/* Address full row */}
+                    <p className="mt-2">Full Address</p>
+                    <p className="text-secondary" style={{ fontSize: "12px" }}>
+                      (Address, City, State, Zip)
+                    </p>
+
+                    <div className="input-group mb-3 mt-1">
+                      <input
+                        className={`form-control ${
+                          errors.address ? "is-invalid" : ""
+                        }`}
+                        type="text"
+                        name="address"
+                        placeholder="Location"
+                        value={selectedStore.address || ""}
+                        onChange={handleChange} // ✅ same handler
+                      />
+                      <span
+                        className="input-group-text"
+                        style={{ cursor: "pointer" }}
+                        onClick={searchCity} // ✅ search function lat/lng ke liye
+                      >
+                        <i className="bi bi-search"></i>
+                      </span>
+                    </div>
+
+                    {errors.address && (
+                      <div className="text-danger small">{errors.address}</div>
+                    )}
+
+                    {showMap && (
+                      <div>
+                        <p
+                          className="text-end fs-3"
+                          style={{ cursor: "pointer" }}
+                          onClick={() => setShowMap(false)}
+                        >
+                          <i className="bi bi-x-circle"></i>
+                        </p>
+                        <MapContainer
+                          data={setPosition}
+                          lat={selectedStore.latitude}
+                          lng={selectedStore.longitude}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Footer */}
+                <div className="modal-footer border-0 d-flex justify-content-center">
+                  <button
+                    type="button"
+                    className="btn btn-outline-danger px-4"
+                    onClick={() => setShowModal(false)}
+                  >
+                    Discard
+                  </button>
+                  <button type="submit" className="btn btn-primary px-4">
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

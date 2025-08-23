@@ -21,6 +21,7 @@ const OrderList = () => {
   useEffect(() => {
     if (updateStatus == "") {
       setIsLoading(true);
+
       axios
         .post(
           `https://bp.quotrprint.com/api/orderList`,
@@ -143,6 +144,9 @@ const OrderList = () => {
             <thead className="table-primary">
               <tr>
                 <th scope="col" className="text-nowrap text-center">
+                  Company Name
+                </th>
+                <th scope="col" className="text-nowrap text-center">
                   Customer Name
                 </th>
                 <th scope="col" className="text-nowrap text-center">
@@ -174,6 +178,10 @@ const OrderList = () => {
             <tbody>
               {orderTableDetails?.map((el, i) => (
                 <tr key={i}>
+                  <td className="text-nowrap fw-bold text-center">
+                    {el.company_name}
+                  </td>
+
                   <td className="text-nowrap fw-bold text-center">{el.name}</td>
                   <td className="text-nowrap fw-bold text-center">
                     {el.email}

@@ -603,17 +603,17 @@ const Quotr = () => {
                               fontSize: "18px",
                             }}
                           >
-                            ${el?.price}
+                            ${el?.discount_price}
                           </span>
-                          <span className="fs-1 text-success">${4.99}</span>{" "}
+                          <span className="fs-2 text-success">${el.price}</span>{" "}
                           <span style={{ fontSize: "12px" }}>per month</span>
                         </p>
                       </div>
                       <hr />
 
-                      <p class="text-center text-primary fw-semibold mb-2">
+                      {/* <p class="text-center text-primary fw-semibold mb-2">
                         Get Free Access 16 Days
-                      </p>
+                      </p> */}
                     </div>
                   </div>
                 </div>
@@ -666,9 +666,9 @@ const Quotr = () => {
                               fontSize: "18px",
                             }}
                           >
-                            ${el?.price}
+                            ${el?.discount_price}
                           </span>
-                          <span className="fs-1 text-success">${4.99}</span>{" "}
+                          <span className="fs-2 text-success">${el.price}</span>{" "}
                           <span style={{ fontSize: "12px" }}>per month</span>
                         </p>
                       </div>

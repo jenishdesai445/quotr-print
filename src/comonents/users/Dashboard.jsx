@@ -44,6 +44,7 @@ const Dashboard = () => {
         setData(res?.data?.data);
         setIsLoading(false);
       })
+
       .catch((err) => {
         setIsLoading(false);
         Swal.fire({

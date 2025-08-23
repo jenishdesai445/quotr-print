@@ -135,6 +135,92 @@ const SignUp = () => {
       }));
     }
   }, [searchAdd]);
+  const verifyEmail = () => {
+    if (!formData.name.trim() || !formData.email.trim()) {
+      setErrors({
+        name: !formData.name.trim() ? "Name is required" : "",
+        email: !formData.email.trim() ? "Email is required" : "",
+      });
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrors((prev) => ({ ...prev, email: "Invalid email format" }));
+      return;
+    }
+
+    setIsLoading(true);
+
+    axios
+      .post(`https://bp.quotrprint.com/api/sendOTP`, {
+        name: formData.name,
+        email: formData.email,
+      })
+      .then((res) => {
+        if (res?.data?.success) {
+          Swal.fire({
+            text: res?.data?.message,
+            icon: "success",
+            confirmButtonText: "ok",
+          });
+          setIsLoading(false);
+          setOtpSent(true);
+          setErrors((prev) => ({ ...prev, email: "" }));
+        } else {
+          // ✅ Handle case where email is already verified/registered
+          if (res?.data?.message?.includes("Email already verification done")) {
+            Swal.fire({
+              title: "Already Registered",
+              text: "Your email is already verified.",
+              icon: "info",
+              confirmButtonText: "ok",
+            }).then(() => {
+              // 🔥 Instead of navigate, update your states
+              setOtpVerified(true);
+              setEmailVerified(true);
+              setShowAllFields(true);
+            });
+          } else {
+            Swal.fire({
+              text: res?.data?.message,
+              icon: "error",
+              confirmButtonText: "ok",
+            });
+          }
+          setIsLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (
+          err?.response?.data?.message?.includes(
+            "Email already verification done"
+          )
+        ) {
+          Swal.fire({
+            title: "Already Registered",
+            text: "Your email is already verified.",
+            icon: "info",
+            confirmButtonText: "ok",
+          }).then(() => {
+            // 🔥 Same logic in catch
+            setOtpVerified(true);
+            setEmailVerified(true);
+            setShowAllFields(true);
+          });
+        } else {
+          Swal.fire({
+            text:
+              err?.response?.data?.message ||
+              "Error sending verification email",
+            icon: "error",
+            confirmButtonText: "ok",
+          });
+        }
+        setIsLoading(false);
+      });
+  };
 
   const searchCity = () => {
     if (!formData.address.trim()) {
@@ -252,7 +338,6 @@ const SignUp = () => {
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   const handleSubmit = () => {
     if (!validateForm()) return;
     setIsLoading(true);
@@ -261,7 +346,6 @@ const SignUp = () => {
     const adminData = {
       ...rest,
       password_confirmation: confirmPassword,
-
       plan: selectedPlan ? selectedPlan.name : "",
       price: selectedPlan ? selectedPlan.price : "",
     };
@@ -270,93 +354,74 @@ const SignUp = () => {
       .post("https://bp.quotrprint.com/api/addStoreOwner", adminData)
       .then((res) => {
         if (res?.data?.success === true) {
-          setIsLoading(false);
+          // ✅ Register success
           Swal.fire({
             title: "Success!",
             text: res?.data?.message,
             icon: "success",
             confirmButtonText: "ok",
-          }).then(() => navigate("/log-in"));
+          });
+
+          // ✅ अब register होने के बाद login call करो
+          const loginPayload = {
+            email: formData.email,
+            password: formData.password, // वही password जो user ने register में डाला था
+          };
+
+          axios
+            .post("https://bp.quotrprint.com/api/login", loginPayload)
+            .then((loginRes) => {
+              if (loginRes?.data?.success === true) {
+                localStorage.setItem("quotrUserToken", loginRes.data?.token);
+                localStorage.setItem("quotrUserId", loginRes.data?.UserId);
+
+                navigate("/dashboard", { state: loginRes?.data?.UserId });
+              } else {
+                Swal.fire({
+                  title: "Login Failed!",
+                  text:
+                    loginRes?.data?.message ||
+                    "Something went wrong during login",
+                  icon: "error",
+                  confirmButtonText: "ok",
+                });
+              }
+            })
+            .catch((loginErr) => {
+              Swal.fire({
+                title: "Login Error!",
+                text:
+                  loginErr.response?.data?.message ||
+                  "Unable to login after registration",
+                icon: "error",
+                confirmButtonText: "ok",
+              });
+            })
+            .finally(() => {
+              setIsLoading(false);
+            });
         }
       })
       .catch((err) => {
         setIsLoading(false);
         let errorMessage = "An error occurred during registration";
-        if (err?.response?.data?.errors) {
-          const serverErrors = err.response.data.errors;
-          setErrors((prev) => ({ ...prev, ...serverErrors }));
-          errorMessage = Object.values(serverErrors).flat().join(", ");
-        } else if (err?.response?.data?.message) {
-          errorMessage = err.response.data.message;
+
+        if (err?.response?.data?.message) {
+          const serverMessage = err.response.data.message;
+          if (typeof serverMessage === "object") {
+            errorMessage = Object.values(serverMessage).flat().join(", ");
+            setErrors((prev) => ({ ...prev, ...serverMessage }));
+          } else {
+            errorMessage = serverMessage;
+          }
         }
+
         Swal.fire({
           title: "Error!",
           text: errorMessage,
           icon: "error",
           confirmButtonText: "ok",
         });
-      });
-  };
-
-  const verifyEmail = () => {
-    if (!formData.name.trim() || !formData.email.trim()) {
-      setErrors({
-        name: !formData.name.trim() ? "Name is required" : "",
-        email: !formData.email.trim() ? "Email is required" : "",
-      });
-      return;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setErrors((prev) => ({ ...prev, email: "Invalid email format" }));
-      return;
-    }
-
-    setIsLoading(true);
-    axios
-      .post(`https://bp.quotrprint.com/api/sendOTP`, {
-        name: formData.name,
-        email: formData.email,
-      })
-      .then((res) => {
-        setIsLoading(false);
-        if (res?.data?.success) {
-          Swal.fire({
-            text: res?.data?.message,
-            icon: "success",
-            confirmButtonText: "ok",
-          });
-          setOtpSent(true);
-          startTimer(); // Start timer on success
-          setErrors((prev) => ({ ...prev, email: "" }));
-        } else {
-          Swal.fire({
-            text: res?.data?.message,
-            icon: "error",
-            confirmButtonText: "ok",
-          });
-        }
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        if (
-          err?.response?.data?.message?.includes(
-            "Email already verification done"
-          )
-        ) {
-          Swal.fire({
-            title: "Already Registered",
-            text: "This email is already verified. Please login.",
-            icon: "info",
-            confirmButtonText: "Go to Login",
-          }).then(() => navigate("/log-in"));
-        } else {
-          Swal.fire({
-            text: err?.response?.data?.message || "Error sending OTP",
-            icon: "error",
-            confirmButtonText: "ok",
-          });
-        }
       });
   };
 
@@ -496,20 +561,57 @@ const SignUp = () => {
               </div>
 
               {/* UPDATED: OTP Section with Timer and Resend button */}
+           
               {otpSent && !emailVerified && (
                 <div className="mt-3 border p-3 rounded">
                   <p>We've sent an OTP to your email. Please enter it below.</p>
-                  <div className="d-flex gap-2">
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="Enter OTP"
-                      value={otp}
-                      onChange={(e) => setOtp(e.target.value)}
-                    />
+                  <div className="d-flex gap-2 m-2 justify-content-start">
+                    {Array.from({ length: 6 }).map((_, index) => (
+                      <input
+                        key={index}
+                        type="text"
+                        maxLength="1"
+                        value={otp[index] || ""}
+                        onChange={(e) => {
+                          const val = e.target.value.replace(/[^0-9]/g, ""); // केवल number
+                          if (!val) return;
+
+                          let newOtp = otp.split("");
+                          newOtp[index] = val;
+                          setOtp(newOtp.join(""));
+
+                          // अगला box focus
+                          const next = document.getElementById(
+                            `otp-${index + 1}`
+                          );
+                          if (next) next.focus();
+                        }}
+                        onKeyDown={(e) => {
+                          if (e.key === "Backspace") {
+                            let newOtp = otp.split("");
+                            newOtp[index] = "";
+                            setOtp(newOtp.join(""));
+
+                            // पिछला box focus
+                            if (index > 0) {
+                              const prev = document.getElementById(
+                                `otp-${index - 1}`
+                              );
+                              if (prev) prev.focus();
+                            }
+                          }
+                        }}
+                        id={`otp-${index}`}
+                        className="form-control text-center"
+                        style={{ width: "40px", fontSize: "18px" }}
+                      />
+                    ))}
+                  </div>
+                  <div className="text-center mt-3">
                     <button
                       className="btn btn-outline-primary"
                       onClick={verifyOtp}
+                      disabled={otp.length !== 6}
                     >
                       Verify OTP
                     </button>
