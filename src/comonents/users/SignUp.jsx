@@ -354,18 +354,10 @@ const SignUp = () => {
       .post("https://bp.quotrprint.com/api/addStoreOwner", adminData)
       .then((res) => {
         if (res?.data?.success === true) {
-          // ✅ Register success
-          Swal.fire({
-            title: "Success!",
-            text: res?.data?.message,
-            icon: "success",
-            confirmButtonText: "ok",
-          });
-
           // ✅ अब register होने के बाद login call करो
           const loginPayload = {
             email: formData.email,
-            password: formData.password, // वही password जो user ने register में डाला था
+            password: formData.password,
           };
 
           axios
@@ -545,7 +537,7 @@ const SignUp = () => {
                     value={formData.email}
                     name="email"
                     onChange={handleInputChange}
-                    disabled={emailVerified}
+                    disabled={emailVerified || otpSent}
                   />
                   {errors.email && (
                     <div className="text-danger small">{errors.email}</div>
@@ -554,76 +546,78 @@ const SignUp = () => {
                 <button
                   className="btn btn-primary p-1 px-2"
                   onClick={verifyEmail}
-                  disabled={emailVerified || timer > 0}
+                  disabled={emailVerified || otpSent}
                 >
-                  {emailVerified ? "Verified" : "Verify"}
+                  {emailVerified || otpSent ? "Verified" : "Verify"}
                 </button>
               </div>
 
               {/* UPDATED: OTP Section with Timer and Resend button */}
-           
+
               {otpSent && !emailVerified && (
                 <div className="mt-3 border p-3 rounded">
                   <p>We've sent an OTP to your email. Please enter it below.</p>
-                  <div className="d-flex gap-2 m-2 justify-content-start">
-                    {Array.from({ length: 6 }).map((_, index) => (
-                      <input
-                        key={index}
-                        type="text"
-                        maxLength="1"
-                        value={otp[index] || ""}
-                        onChange={(e) => {
-                          const val = e.target.value.replace(/[^0-9]/g, ""); // केवल number
-                          if (!val) return;
 
-                          let newOtp = otp.split("");
-                          newOtp[index] = val;
-                          setOtp(newOtp.join(""));
-
-                          // अगला box focus
-                          const next = document.getElementById(
-                            `otp-${index + 1}`
-                          );
-                          if (next) next.focus();
-                        }}
-                        onKeyDown={(e) => {
-                          if (e.key === "Backspace") {
+                  <div className="d-flex flex-wrap align-items-center gap-2 m-2">
+                    <div className="d-flex flex-wrap gap-2 flex-grow-1">
+                      {Array.from({ length: 6 }).map((_, index) => (
+                        <input
+                          key={index}
+                          type="tel"
+                          inputMode="numeric"
+                          maxLength="1"
+                          value={otp[index] || ""}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/[^0-9]/g, "");
                             let newOtp = otp.split("");
-                            newOtp[index] = "";
+                            newOtp[index] = val;
                             setOtp(newOtp.join(""));
 
-                            // पिछला box focus
-                            if (index > 0) {
-                              const prev = document.getElementById(
-                                `otp-${index - 1}`
+                            if (val && index < 5) {
+                              const next = document.getElementById(
+                                `otp-${index + 1}`
                               );
-                              if (prev) prev.focus();
+                              if (next) next.focus();
                             }
-                          }
-                        }}
-                        id={`otp-${index}`}
-                        className="form-control text-center"
-                        style={{ width: "40px", fontSize: "18px" }}
-                      />
-                    ))}
-                  </div>
-                  <div className="text-center mt-3">
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Backspace") {
+                              let newOtp = otp.split("");
+                              newOtp[index] = "";
+                              setOtp(newOtp.join(""));
+
+                              if (index > 0) {
+                                const prev = document.getElementById(
+                                  `otp-${index - 1}`
+                                );
+                                if (prev) prev.focus();
+                              }
+                            }
+                          }}
+                          id={`otp-${index}`}
+                          className="form-control text-center"
+                          style={{ width: "40px", fontSize: "18px" }}
+                        />
+                      ))}
+                    </div>
+
                     <button
-                      className="btn btn-outline-primary"
+                      className="btn btn-outline-primary mt-2 mt-sm-0"
                       onClick={verifyOtp}
                       disabled={otp.length !== 6}
                     >
                       Verify OTP
                     </button>
                   </div>
-                  <div className="mt-2 text-center">
+
+                  <div className="mt-2 d-flex justify-content-start">
                     {timer > 0 ? (
-                      <p className="text-secondary">
+                      <p className="text-secondary mb-0">
                         Resend OTP in {timer} seconds
                       </p>
                     ) : (
                       <button
-                        className="btn btn-link p-0"
+                        className="btn btn-link btn-sm p-0"
                         onClick={handleResendOtp}
                         disabled={!canResend}
                       >

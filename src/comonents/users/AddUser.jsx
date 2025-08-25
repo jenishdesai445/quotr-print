@@ -25,6 +25,8 @@ const AddUser = () => {
     longitude: null,
   });
   const [errors, setErrors] = useState({});
+  const [timer, setTimer] = useState(0);
+  const [canResend, setCanResend] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [searchAdd, setSearchAdd] = useState("");
@@ -189,6 +191,29 @@ const AddUser = () => {
     });
   };
 
+  const handleResendOtp = () => {
+    if (canResend) {
+      verifyEmail();
+    }
+  };
+
+  // OTP Timer Logic
+  useEffect(() => {
+    let interval;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    } else if (timer === 0 && otpSent) {
+      setCanResend(true);
+    }
+    return () => clearInterval(interval);
+  }, [timer, otpSent]);
+
+  const startTimer = () => {
+    setTimer(60); // 60 seconds
+    setCanResend(false);
+  };
   // Validate the entire form
   const validateForm = () => {
     const newErrors = {};
@@ -498,7 +523,7 @@ const AddUser = () => {
                     value={formData.email}
                     name="email"
                     onChange={handleInputChange}
-                    disabled={emailVerified}
+                    disabled={emailVerified || otpSent}
                   />
                   {errors.email && (
                     <div className="text-danger small">{errors.email}</div>
@@ -507,28 +532,83 @@ const AddUser = () => {
                 <button
                   className="btn btn-primary p-1 px-2"
                   onClick={verifyEmail}
-                  disabled={emailVerified}
+                  disabled={emailVerified || otpSent}
                 >
-                  {emailVerified ? "Verified" : "Verify"}
+                  {emailVerified || otpSent ? "Verified" : "Verify"}
                 </button>
               </div>
 
               {otpSent && !emailVerified && (
-                <div className="mt-2">
-                  <input
-                    className="form-control"
-                    type="text"
-                    placeholder="Enter OTP"
-                    value={otp}
-                    name="otp"
-                    onChange={(e) => setOtp(e.target.value)}
-                  />
-                  <button
-                    className="btn btn-outline-primary mt-2"
-                    onClick={verifyOtp}
-                  >
-                    Verify OTP
-                  </button>
+                <div className="mt-3 border p-3 rounded">
+                  <p>We've sent an OTP to your email. Please enter it below.</p>
+
+                  <div className="d-flex flex-wrap align-items-center gap-2 m-2">
+                    <div className="d-flex flex-wrap gap-2 flex-grow-1">
+                      {Array.from({ length: 6 }).map((_, index) => (
+                        <input
+                          key={index}
+                          type="tel"
+                          inputMode="numeric"
+                          maxLength="1"
+                          value={otp[index] || ""}
+                          onChange={(e) => {
+                            const val = e.target.value.replace(/[^0-9]/g, "");
+                            let newOtp = otp.split("");
+                            newOtp[index] = val;
+                            setOtp(newOtp.join(""));
+
+                            if (val && index < 5) {
+                              const next = document.getElementById(
+                                `otp-${index + 1}`
+                              );
+                              if (next) next.focus();
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Backspace") {
+                              let newOtp = otp.split("");
+                              newOtp[index] = "";
+                              setOtp(newOtp.join(""));
+
+                              if (index > 0) {
+                                const prev = document.getElementById(
+                                  `otp-${index - 1}`
+                                );
+                                if (prev) prev.focus();
+                              }
+                            }
+                          }}
+                          id={`otp-${index}`}
+                          className="form-control text-center"
+                          style={{ width: "40px", fontSize: "18px" }}
+                        />
+                      ))}
+                    </div>
+
+                    <button
+                      className="btn btn-outline-primary mt-2 mt-sm-0"
+                      onClick={verifyOtp}
+                      disabled={otp.length !== 6}
+                    >
+                      Verify OTP
+                    </button>
+                  </div>
+
+                  <div className="mt-2 d-flex justify-content-start">
+                    {timer > 0 ? (
+                      <p className="text-secondary mb-0">
+                        Resend OTP in {timer} seconds
+                      </p>
+                    ) : (
+                      <button
+                        className="btn btn-link btn-sm p-0"
+                        onClick={handleResendOtp}
+                        disabled={!canResend}
+                      >
+                        Resend OTP
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
 

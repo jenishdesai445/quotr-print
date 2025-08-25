@@ -116,7 +116,7 @@ const ProductList = () => {
                       )}`,
                     }}
                   >
-                    <div class="col-8 m-auto h-100 d-flex align-items-center">
+                    <div className="col-8 m-auto h-100 d-flex align-items-center justify-content-center">
                       <img
                         src={el.photo}
                         class="img-fluid p-1"
@@ -126,7 +126,7 @@ const ProductList = () => {
                     </div>
                   </div>
                   <div class="h-100 text-center">
-                    <p class="fs-16 py-3 fw-semibold">{el.name}</p>
+                    <h5 class=" py-3 fw-semibold">{el.name}</h5>
                     <p class="fs-14 py-2 text-secondary">{el.text}</p>
                   </div>
                 </div>

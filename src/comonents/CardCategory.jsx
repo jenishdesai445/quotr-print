@@ -164,7 +164,7 @@ const CardCategory = () => {
                       )}`,
                     }}
                   >
-                    <div className="col-8 m-auto h-100 d-flex align-items-center">
+                    <div className="col-8 m-auto h-100 d-flex align-items-center justify-content-center">
                       <img
                         src={el.photo}
                         className="img-fluid p-1"
@@ -173,7 +173,7 @@ const CardCategory = () => {
                       />
                     </div>
                   </div>
-                  <div>
+                  <div className="text-center">
                     <p className="fs-16 fw-bold py-3">{el.name}</p>
                   </div>
                 </div>

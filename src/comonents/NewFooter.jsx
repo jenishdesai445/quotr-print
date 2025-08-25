@@ -14,7 +14,7 @@ const NewFooter = () => {
   const navigate = useNavigate();
 
   return (
-    <div class="  m-0 p-0">
+    <div class="m-0 p-0">
       <div class="footerColour"></div>
 
       <div class="col-11 m-auto mt-4 ">

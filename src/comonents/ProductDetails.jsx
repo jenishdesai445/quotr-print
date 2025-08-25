@@ -893,7 +893,7 @@ const ProductDetails = () => {
                   </div>
                 </div>
 
-                <div class=" border   my-2">
+                <div class="border   my-2">
                   <div class="col-11 m-auto d-flex my-3 align-items-center justify-content-between">
                     <div>
                       <p class="text-secondry">Grand Total</p>
@@ -901,6 +901,7 @@ const ProductDetails = () => {
                         $ {placeOrder?.grand_tot_amount}
                       </p>
                     </div>
+
                     <div>
                       <button
                         type="button"
@@ -917,6 +918,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
+      
       {/* <div class='col-11 m-auto'> 
         <div class=' col-lg-9 text-start my-4'>
           <div class='d-flex gap-4'>

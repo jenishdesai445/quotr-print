@@ -79,8 +79,7 @@ const Login = () => {
         >
           <p class="fs-1">Enter Your Login Details</p>
           <p class="my-2" style={{ fontSize: "12px", color: "gray" }}>
-            Signin to your account by adding <br />
-            your email address and password
+            Signin to your account by adding your email address and password
           </p>
           <br />
 
@@ -109,6 +108,7 @@ const Login = () => {
               onChange={logInInfo}
             />
             <span
+              style={{ cursor: "pointer" }}
               class="input-group-text"
               id="addon-wrapping"
               onClick={() => setShowPass(!showPass)}
@@ -122,6 +122,7 @@ const Login = () => {
               <input type="checkbox" />{" "}
               <p style={{ fontSize: "12px" }}>Remember me</p>
             </div>
+
             <div>
               {" "}
               <p

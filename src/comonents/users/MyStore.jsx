@@ -8,7 +8,7 @@ import { useLoading } from "../LoadingContext ";
 import Swal from "sweetalert2";
 
 const MyStore = () => {
-   const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState({});
   const [showMap, setShowMap] = useState(false);
   const [position, setPosition] = useState();
 
@@ -47,7 +47,7 @@ const MyStore = () => {
     }
   }, [position]);
 
-  const API_key = `AIzaSyAvzHK00m3gO1-hBanLOTHn9wNE_BUgdMw`; // apna API key daalo
+  const API_key = `AIzaSyAvzHK00m3gO1-hBanLOTHn9wNE_BUgdMw`;
 
   const searchCity = () => {
     if (!selectedStore.address?.trim()) {
@@ -239,7 +239,7 @@ const MyStore = () => {
                 <div className="modal-body">
                   <div className="row g-4 text-start">
                     {/* Store ID */}
-                    <div className="col-md-6 ">
+                    {/* <div className="col-md-6 ">
                       <label className="form-label fw-semibold">
                         Store ID <span className="text-danger">*</span>
                       </label>
@@ -251,7 +251,7 @@ const MyStore = () => {
                         onChange={handleChange}
                         placeholder="Enter store ID"
                       />
-                    </div>
+                    </div> */}
 
                     {/* Name */}
                     <div className="col-md-6">
@@ -270,8 +270,14 @@ const MyStore = () => {
 
                     {/* Email */}
                     <div className="col-md-6">
-                      <label className="form-label fw-semibold">
-                        Email <span className="text-danger">*</span>
+                      <label className="form-label fw-semibold d-flex align-items-center">
+                        Email <span className="text-danger ms-1">*</span>
+                        <span
+                          className="ms-2 text-muted"
+                          style={{ fontSize: "12px" }}
+                        >
+                          (Not editable)
+                        </span>
                       </label>
                       <input
                         type="email"
@@ -327,11 +333,6 @@ const MyStore = () => {
                       />
                     </div>
 
-                   
-
-                   
-
-                   
                     {/* Address full row */}
                     <p className="mt-2">Full Address</p>
                     <p className="text-secondary" style={{ fontSize: "12px" }}>
