@@ -142,19 +142,27 @@ const CardCategory = () => {
         <div className="col-md-8 m-auto row mt-5">
           {filterCatData?.map?.((el) => {
             return (
-              <div key={el.id} className="col-lg-4 col-6 m-auto my-3">
+              <div
+                key={el.id}
+                className="col-lg-4 col-md-6 col-10 m-auto my-3"
+                style={{ minWidth: "250px" }}
+              >
                 <div
-                  className="m-auto col-sm-10"
+                  className="m-auto"
                   style={{
                     height: "270px",
                     borderRadius: "25px",
                     background: "white",
                     boxShadow: "0px 4px 4px 0px rgba(60, 65, 68, 0.09)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                   onClick={() => navigate("/product-list", { state: el.id })}
                 >
                   <div
-                    className="col-12 d-flex align-items-center"
+                    className="col-12 d-flex align-items-center justify-content-center"
                     style={{
                       height: "200px",
                       borderRadius: "25px 25px 0 0",
@@ -164,16 +172,14 @@ const CardCategory = () => {
                       )}`,
                     }}
                   >
-                    <div className="col-8 m-auto h-100 d-flex align-items-center justify-content-center">
-                      <img
-                        src={el.photo}
-                        className="img-fluid p-1"
-                        style={{ maxHeight: "180px" }}
-                        alt=""
-                      />
-                    </div>
+                    <img
+                      src={el.photo}
+                      className="img-fluid p-1"
+                      style={{ maxHeight: "180px", objectFit: "contain" }}
+                      alt=""
+                    />
                   </div>
-                  <div className="text-center">
+                  <div className="text-center w-100">
                     <p className="fs-16 fw-bold py-3">{el.name}</p>
                   </div>
                 </div>

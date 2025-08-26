@@ -86,7 +86,6 @@ const Navbar = () => {
               to="/support"
               className={({ isActive }) =>
                 isActive ? "nav-link active" : "nav-link"
-              
               }
             >
               Support
@@ -165,10 +164,10 @@ const Navbar = () => {
             ></button>
           </div>
           <div class="offcanvas-body">
-            <div class="mt-5">
+            <div class="mt-4 d-flex flex-column gap-1">
               {token ? (
                 <p
-                  class="fs-5 fw-bold mt-2"
+                  class="menu-item"
                   data-bs-dismiss="offcanvas"
                   aria-label="Close"
                   onClick={() => navigate("./dashboard")}
@@ -177,7 +176,7 @@ const Navbar = () => {
                 </p>
               ) : (
                 <p
-                  class="fs-5 fw-bold mt-2"
+                  class="menu-item"
                   data-bs-dismiss="offcanvas"
                   aria-label="Close"
                   onClick={() => navigate("./")}
@@ -185,31 +184,9 @@ const Navbar = () => {
                   Home
                 </p>
               )}
-              {!token && (
-                <Link
-                  activeClass="active"
-                  to="about"
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-                    cursor: "pointer",
-                  }}
-                >
-                  <p
-                    class="fs-5 fw-bold"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
-                  >
-                    About
-                  </p>
-                </Link>
-              )}
+
               <p
-                class="fs-5 fw-bold mt-2"
+                class="menu-item"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
                 onClick={() => navigate("./support")}
@@ -218,37 +195,34 @@ const Navbar = () => {
               </p>
 
               <p
-                class="fs-5 fw-bold mt-2"
+                class="menu-item"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
                 onClick={() => navigate("./contact")}
               >
                 Contact Us
               </p>
+
               {token ? (
-                <div class="mt-2">
-                  <button
-                    type="button"
-                    class="btn btn-dark rounded-5 fw-bold"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
-                    onClick={logout}
-                  >
-                    Log-Out
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  class="btn btn-dark menu-btn fw-bold"
+                  data-bs-dismiss="offcanvas"
+                  aria-label="Close"
+                  onClick={logout}
+                >
+                  Log-Out
+                </button>
               ) : (
-                <div class="mt-2">
-                  <button
-                    type="button"
-                    class="btn btn-dark rounded-5 fw-bold"
-                    data-bs-dismiss="offcanvas"
-                    aria-label="Close"
-                    onClick={() => navigate("/log-in")}
-                  >
-                    Log-In
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  class="btn btn-dark menu-btn fw-bold"
+                  data-bs-dismiss="offcanvas"
+                  aria-label="Close"
+                  onClick={() => navigate("/log-in")}
+                >
+                  Log-In
+                </button>
               )}
             </div>
           </div>

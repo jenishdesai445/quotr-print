@@ -84,7 +84,7 @@ const Contact = () => {
           style={{ overflow: "hidden" }}
         >
           <div class="col-md-4" style={{ background: "#0D6EFD" }}>
-            <div class="col-11 m-auto fs-5 fw-bold h-100 text-white ">
+            <div class="col-11 m-auto fs-5 contact-text fw-bold h-100 text-white ">
               <div class="my-5">
                 <div class="d-flex gap-3 mt-2">
                   <div>

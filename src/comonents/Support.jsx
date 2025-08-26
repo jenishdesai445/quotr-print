@@ -1,5 +1,7 @@
 import React from "react";
 import { Helmet } from "react-helmet";
+import "./style.css";
+
 const faq = [
   {
     que: "What is Product standard round corner radius?",
@@ -22,53 +24,66 @@ const Support = () => {
         <meta charSet="utf-8" />
         <title>Support</title>
       </Helmet>
-      <div class="col-11 m-auto my-5 row">
-        <div class="col-md-6">
-          <div class="col-11 m-auto">
+
+      {/* Videos */}
+      <div className="col-11 m-auto my-5 row">
+        <div className="col-md-6">
+          <div className="col-11 m-auto">
             <iframe
               width="100%"
               height={400}
               src="https://www.youtube.com/embed/XeNe-GHZi9c?si=y9_njkH3LkFMg_1p"
               title="YouTube video player"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
             ></iframe>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="col-11 m-auto">
+        <div className="col-md-6">
+          <div className="col-11 m-auto">
             <iframe
               width="100%"
               height={400}
               src="https://www.youtube.com/embed/XeNe-GHZi9c?si=y9_njkH3LkFMg_1p"
               title="YouTube video player"
-              frameborder="0"
+              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              referrerpolicy="strict-origin-when-cross-origin"
-              allowfullscreen
+              referrerPolicy="strict-origin-when-cross-origin"
+              allowFullScreen
             ></iframe>
           </div>
         </div>
       </div>
+
+      {/* FAQ Section */}
       <div className="col-11 m-auto my-5">
         <p className="fs-3 fw-bold text-center mb-4">FAQ's</p>
 
         {faq?.map((el, i) => {
           return (
-            <div className="border rounded-3 shadow-sm mt-3 overflow-hidden">
+            <div
+              key={i}
+              className="border rounded-3 shadow-sm mt-3 overflow-hidden"
+            >
               {/* Question */}
               <div
-                className="productDetailCollap bg-light px-3 py-2 d-flex align-items-center justify-content-between cursor-pointer"
+                className="productDetailCollap bg-light px-3 py-2 d-flex align-items-center justify-content-between"
                 data-bs-toggle="collapse"
                 href={`#specifition${i}`}
                 role="button"
                 aria-expanded="false"
                 aria-controls={`specifition${i}`}
+                style={{ cursor: "pointer" }}
               >
                 <p className="m-0 fw-semibold fs-6">{el.que}</p>
-                <i className="bi bi-chevron-down fs-6"></i>
+                <i
+                  className="bi bi-chevron-down fs-6 faq-icon"
+                  style={{
+                    transition: "transform 0.3s ease",
+                  }}
+                ></i>
               </div>
 
               {/* Answer */}

@@ -918,7 +918,7 @@ const ProductDetails = () => {
           </div>
         </div>
       </div>
-      
+
       {/* <div class='col-11 m-auto'> 
         <div class=' col-lg-9 text-start my-4'>
           <div class='d-flex gap-4'>
