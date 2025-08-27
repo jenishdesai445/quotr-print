@@ -158,6 +158,7 @@ const CardCategory = () => {
                     flexDirection: "column",
                     alignItems: "center",
                     justifyContent: "center",
+                    cursor: "pointer",
                   }}
                   onClick={() => navigate("/product-list", { state: el.id })}
                 >

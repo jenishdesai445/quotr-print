@@ -172,11 +172,17 @@ const MyStore = () => {
               <div className="card border-2 shadow-sm rounded-4 h-100 position-relative hover-card">
                 {/* Update Button (Top Right) */}
                 <button
-                  className="btn btn-sm btn-light border position-absolute rounded-circle shadow-sm"
-                  style={{ top: "12px", right: "12px" }}
+                  className="btn btn-sm border-0 position-absolute rounded-circle  d-flex align-items-center justify-content-center transition-all"
+                  style={{
+                    top: "12px",
+                    right: "12px",
+                    width: "38px",
+                    height: "38px",
+                    backgroundColor: "#f8f9fa",
+                  }}
                   onClick={() => handleUpdateClick(el)}
                 >
-                  <i className="bi bi-pencil-square text-primary"></i>
+                  <i className="bi bi-pencil-square text-primary fs-5"></i>
                 </button>
 
                 <div className="card-body">

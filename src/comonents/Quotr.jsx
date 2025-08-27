@@ -275,11 +275,11 @@ const Quotr = () => {
           <p class="display-4 fw-bold" data-aos="fade-up">
             How it Works
           </p>
-          <p class="fs-5 col-lg-8 col-11 mt-3 m-auto" data-aos="fade-up">
+          {/* <p class="fs-5 col-lg-8 col-11 mt-3 m-auto" data-aos="fade-up">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit,
             labore aperiam odio neque nulla corporis ab unde dolor hic
             inventore!
-          </p>
+          </p> */}
         </div>
 
         <div class="col-11 m-auto mt-5">
@@ -376,166 +376,177 @@ const Quotr = () => {
         </div>
       </div> */}
 
-<div
-  style={{
-    background:
-      "linear-gradient(rgba(202,238,255,0.5) 30%, rgba(155,230,250,0.6) 70%,#fff 0)",
-  }}
->
-  <div class="col-md-6 col-11 m-auto Features" id="features">
-    <div class="position-relative">
-      <br />
-      <img
-        class="position-absolute"
-        style={{ top: "-5%", left: "0%", zIndex: "0" }}
-        src={require("../images/tringel.png")}
-        alt=""
-      />
-      <p class="fs-1 fw-bold mt-3 z-1" data-aos="fade-up">
-        Key Features of{" "}
-      </p>
-      <p
-        class="fs-1 fw-bold z-1"
-        style={{ color: "#0094DE" }}
-        data-aos="fade-up"
-      >
-        Quotr App
-      </p>
-    </div>
-  </div>
-
-  <div class="col-11 m-auto row my-3">
-    {/* Feature 1 */}
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12 my-4" data-aos="zoom-in">
       <div
-        class="col-11 m-auto rounded-4 p-4 bg-white h-100"
         style={{
-          boxShadow:
-            "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+          background:
+            "linear-gradient(rgba(202,238,255,0.5) 30%, rgba(155,230,250,0.6) 70%,#fff 0)",
         }}
       >
-        <div
-          class="d-flex align-items-center justify-content-center m-auto my-3"
-          style={{
-            width: "60px",
-            height: "60px",
-            borderRadius: "50%",
-            background: "#fcd9d7",
-          }}
-        >
-          <p class="fw-bold fs-3" style={{ color: "#EF4136" }}>
-            <i class="bi bi-clock"></i>
-          </p>
+        <div class="col-md-6 col-11 m-auto Features" id="features">
+          <div class="position-relative">
+            <br />
+            <img
+              class="position-absolute"
+              style={{ top: "-5%", left: "0%", zIndex: "0" }}
+              src={require("../images/tringel.png")}
+              alt=""
+            />
+            <p class="fs-1 fw-bold mt-3 z-1" data-aos="fade-up">
+              Key Features of{" "}
+            </p>
+            <p
+              class="fs-1 fw-bold z-1"
+              style={{ color: "#0094DE" }}
+              data-aos="fade-up"
+            >
+              Quotr App
+            </p>
+          </div>
         </div>
-        <div>
-          <p class="fs-5 fw-bold">Intuitive Interface</p>
-          <p>
-            Quotr makes it easy for employees and customers alike to find
-            exactly what they’re looking for
-          </p>
+
+        <div class="col-11 m-auto row my-3">
+          {/* Feature 1 */}
+          <div
+            class="col-lg-3 col-md-6 col-sm-6 col-12 my-4"
+            data-aos="zoom-in"
+          >
+            <div
+              class="col-11 m-auto rounded-4 p-4 bg-white h-100"
+              style={{
+                boxShadow:
+                  "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+              }}
+            >
+              <div
+                class="d-flex align-items-center justify-content-center m-auto my-3"
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  borderRadius: "50%",
+                  background: "#fcd9d7",
+                }}
+              >
+                <p class="fw-bold fs-3" style={{ color: "#EF4136" }}>
+                  <i class="bi bi-clock"></i>
+                </p>
+              </div>
+              <div>
+                <p class="fs-5 fw-bold">Intuitive Interface</p>
+                <p>
+                  Quotr makes it easy for employees and customers alike to find
+                  exactly what they’re looking for
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature 2 */}
+          <div
+            class="col-lg-3 col-md-6 col-sm-6 col-12 my-4"
+            data-aos="zoom-in"
+          >
+            <div
+              class="col-11 m-auto rounded-4 p-4 bg-white h-100"
+              style={{
+                boxShadow:
+                  "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+              }}
+            >
+              <div
+                class="d-flex align-items-center justify-content-center m-auto my-3"
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  borderRadius: "50%",
+                  background: "#fdead2",
+                }}
+              >
+                <p class="fw-bold fs-3" style={{ color: "#f7941e" }}>
+                  <i class="bi bi-calendar3"></i>
+                </p>
+              </div>
+              <div>
+                <p class="fs-5 fw-bold">Visual & Interactive</p>
+                <p>
+                  Customers that see your print selection on Quotr are more
+                  likely to purchase, and even upgrade their purchase.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature 3 */}
+          <div
+            class="col-lg-3 col-md-6 col-sm-6 col-12 my-4"
+            data-aos="zoom-in"
+          >
+            <div
+              class="col-11 m-auto rounded-4 p-4 bg-white h-100"
+              style={{
+                boxShadow:
+                  "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+              }}
+            >
+              <div
+                class="d-flex align-items-center justify-content-center m-auto my-3"
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  borderRadius: "50%",
+                  background: "#d0ecd8",
+                }}
+              >
+                <p class="fw-bold fs-3" style={{ color: "#14a13d" }}>
+                  <i class="bi bi-person-vcard"></i>
+                </p>
+              </div>
+              <div>
+                <p class="fs-5 fw-bold">Emailed Order Forms</p>
+                <p>
+                  Once an order submitted on the Quotr app, a detailed form is
+                  emailed to your store. Giving your print manager all the info
+                  they need to finalize the order at your preferred print shop.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Feature 4 */}
+          <div
+            class="col-lg-3 col-md-6 col-sm-6 col-12 my-4"
+            data-aos="zoom-in"
+          >
+            <div
+              class="col-11 m-auto rounded-4 p-4 bg-white h-100"
+              style={{
+                boxShadow:
+                  "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
+              }}
+            >
+              <div
+                class="d-flex align-items-center justify-content-center m-auto my-3"
+                style={{
+                  width: "60px",
+                  height: "60px",
+                  borderRadius: "50%",
+                  background: "#e9edff",
+                }}
+              >
+                <p class="fw-bold fs-3" style={{ color: "#91a7ff" }}>
+                  <i class="bi bi-megaphone"></i>
+                </p>
+              </div>
+              <div>
+                <p class="fs-5 fw-bold">Accurate and Up To Date</p>
+                <p>
+                  The Quotr team monitors popular online wholesale printshop to
+                  ensure you’re always quoting at a competitive price.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-
-    {/* Feature 2 */}
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12 my-4" data-aos="zoom-in">
-      <div
-        class="col-11 m-auto rounded-4 p-4 bg-white h-100"
-        style={{
-          boxShadow:
-            "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
-        }}
-      >
-        <div
-          class="d-flex align-items-center justify-content-center m-auto my-3"
-          style={{
-            width: "60px",
-            height: "60px",
-            borderRadius: "50%",
-            background: "#fdead2",
-          }}
-        >
-          <p class="fw-bold fs-3" style={{ color: "#f7941e" }}>
-            <i class="bi bi-calendar3"></i>
-          </p>
-        </div>
-        <div>
-          <p class="fs-5 fw-bold">Visual & Interactive</p>
-          <p>
-            Customers that see your print selection on Quotr are more likely to
-            purchase, and even upgrade their purchase.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    {/* Feature 3 */}
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12 my-4" data-aos="zoom-in">
-      <div
-        class="col-11 m-auto rounded-4 p-4 bg-white h-100"
-        style={{
-          boxShadow:
-            "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
-        }}
-      >
-        <div
-          class="d-flex align-items-center justify-content-center m-auto my-3"
-          style={{
-            width: "60px",
-            height: "60px",
-            borderRadius: "50%",
-            background: "#d0ecd8",
-          }}
-        >
-          <p class="fw-bold fs-3" style={{ color: "#14a13d" }}>
-            <i class="bi bi-person-vcard"></i>
-          </p>
-        </div>
-        <div>
-          <p class="fs-5 fw-bold">Emailed Order Forms</p>
-          <p>
-            Once an order submitted on the Quotr app, a detailed form is emailed
-            to your store. Giving your print manager all the info they need to
-            finalize the order at your preferred print shop.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    {/* Feature 4 */}
-    <div class="col-lg-3 col-md-6 col-sm-6 col-12 my-4" data-aos="zoom-in">
-      <div
-        class="col-11 m-auto rounded-4 p-4 bg-white h-100"
-        style={{
-          boxShadow:
-            "0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1)",
-        }}
-      >
-        <div
-          class="d-flex align-items-center justify-content-center m-auto my-3"
-          style={{
-            width: "60px",
-            height: "60px",
-            borderRadius: "50%",
-            background: "#e9edff",
-          }}
-        >
-          <p class="fw-bold fs-3" style={{ color: "#91a7ff" }}>
-            <i class="bi bi-megaphone"></i>
-          </p>
-        </div>
-        <div>
-          <p class="fs-5 fw-bold">Accurate and Up To Date</p>
-          <p>
-            The Quotr team monitors popular online wholesale printshop to ensure
-            you’re always quoting at a competitive price.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 
       <div>
         {token ? (

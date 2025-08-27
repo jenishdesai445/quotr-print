@@ -3,16 +3,9 @@
   overflow-y: hidden;
 }
 
-.header{
+.header {
   position: fixed;
   width: 100%;
   background-color: white;
   z-index: 9999;
 }
-
-
- 
- 
- 
- 
- 

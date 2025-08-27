@@ -178,11 +178,31 @@ const Profile = () => {
             >
               {/* Update Button */}
               <button
-                className="btn btn-sm btn-light border position-absolute rounded-circle shadow"
-                style={{ top: "12px", right: "12px" }}
+                className="btn btn-sm d-flex align-items-center justify-content-center border-0 position-absolute rounded-circle shadow-lg"
+                style={{
+                  top: "12px",
+                  right: "12px",
+                  width: "40px",
+                  height: "40px",
+                  background: "linear-gradient(135deg, #f8f9fa, #e9ecef)",
+                  transition: "all 0.3s ease-in-out",
+                }}
                 onClick={handleUpdateClick}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "scale(1.1)";
+                  e.currentTarget.style.boxShadow =
+                    "0 6px 12px rgba(0,0,0,0.2)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "scale(1)";
+                  e.currentTarget.style.boxShadow =
+                    "0 3px 6px rgba(0,0,0,0.15)";
+                }}
               >
-                <i className="bi bi-pencil-square text-primary"></i>
+                <i
+                  className="bi bi-pencil-square"
+                  style={{ color: "#0d6efd", fontSize: "18px" }}
+                ></i>
               </button>
 
               <div className="card-body text-center p-4">
