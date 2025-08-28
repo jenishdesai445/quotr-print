@@ -183,8 +183,8 @@ const Quotr = () => {
         }}
       >
         <div
-          class="d-flex align-items-center justify-content-center"
-          style={{ height: "70vh" }}
+          class="d-flex align-items-center custom-height justify-content-center"
+          // style={{ height: "70vh" }}
         >
           <div
             class="col-lg-10 col-11 m-auto"
@@ -246,6 +246,7 @@ const Quotr = () => {
             src={require("../images/Polygon2.png")}
             alt=""
           />
+
           <img
             class="polygon polygon3 position-absolute"
             src={require("../images/Polygon3.png")}

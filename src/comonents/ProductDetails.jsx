@@ -13,6 +13,8 @@ import ProductAttribute2 from "./ProductAttribute2";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const ProductDetails = () => {
   const location = useLocation();
@@ -386,19 +388,27 @@ const ProductDetails = () => {
                 class="productSteps rounded-start-3 "
                 style={
                   step == "step1"
-                    ? { background: "#0094DE", color: "white" }
+                    ? {
+                        background: "#0094DE",
+                        color: "white",
+                        cursor: "pointer",
+                      }
                     : {}
                 }
                 onClick={() => setStep("step1")}
               >
                 {" "}
-                Step 1 : Product Option
+                <p style={{cursor:"pointer"}}> Step 1 : Product Option</p>
               </div>
               <div
                 class="productSteps rounded-end-3 "
                 style={
                   step == "step2"
-                    ? { background: "#0094DE", color: "white" }
+                    ? {
+                        background: "#0094DE",
+                        color: "white",
+                        cursor: "pointer",
+                      }
                     : {}
                 }
                 onClick={() =>
@@ -406,7 +416,10 @@ const ProductDetails = () => {
                 }
               >
                 {" "}
-                Step 2 : Order Confirmation
+                <p style={{ cursor: "pointer" }}>
+                  {" "}
+                  Step 2 : Order Confirmation
+                </p>
               </div>
             </div>
             <div style={{ display: step === "step1" ? "block" : "none" }}>
@@ -534,18 +547,22 @@ const ProductDetails = () => {
                     <label htmlFor="phone" className="fw-semibold">
                       Mobile/Phone No. <span className="text-danger">*</span>
                     </label>
-                    <input
-                      type="text"
-                      id="phone"
-                      className="form-control"
-                      placeholder="Enter mobile no."
-                      name="phone"
-                      // maxLength="10"
-                      onInput={(e) => {
-                        // Only digits allowed
-                        e.target.value = e.target.value.replace(/[^0-9]/g, "");
+
+                    <PhoneInput
+                      country={"us"}
+                      value={placeOrder?.phone || ""}
+                      onChange={(phone, country) =>
+                        fillPlaceOrder({
+                          target: { name: "phone", value: phone },
+                        })
+                      }
+                      inputProps={{
+                        name: "phone",
+                        required: true,
+                        id: "phone",
                       }}
-                      onChange={fillPlaceOrder}
+                      containerClass="w-100"
+                      inputClass="form-control w-100 fw-medium"
                     />
                   </div>
 
@@ -834,7 +851,7 @@ const ProductDetails = () => {
                 <div class="col-11 mt-2 m-auto">
                   <div style={{ height: "10px" }}></div>
                   <div class="text-start">
-                    <p class="h4">Cost Summary</p>
+                    <p class="h6 fw-semibold">Cost Summary</p>
 
                     <hr />
                     <div class="d-flex align-items-center justify-content-between">

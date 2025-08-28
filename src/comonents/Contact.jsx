@@ -3,6 +3,8 @@ import "./style.css";
 import axios from "axios";
 
 import Swal from "sweetalert2";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const Contact = () => {
   const [contact, setContact] = useState();
@@ -158,20 +160,18 @@ const Contact = () => {
               </label>
             </div>
 
-            <div class="form__group field">
-              <input
-                type="input"
-                class="form__field"
+          {/* ✅ PhoneInput with same style */}
+            <div className="form__group field">
+              <PhoneInput
+                country={"us"}
                 value={contact?.phone}
+                onChange={(phone) => setContact({ ...contact, phone })}
+                inputClass="form__field phone-input-field"
+                containerClass="w-100"
+                buttonClass="phone-input-btn"
                 placeholder="Phone"
-                name="phone"
-                onInput={(e) => {
-                  // Only digits allowed
-                  e.target.value = e.target.value.replace(/[^0-9]/g, "");
-                }}
-                onChange={contactDetails}
               />
-              <label for="name" class="form__label">
+              <label htmlFor="phone" className="form__label">
                 Phone
               </label>
             </div>

@@ -344,12 +344,12 @@ const Profile = () => {
                         onChange={(phone, country) =>
                           setUpdatedProfile((prev) => ({
                             ...prev,
-                            phone: phone, // full phone with country code
-                            countryCode: country.dialCode, // optional agar store karna chaho
+                            phone: phone,
+                            countryCode: country.dialCode,
                           }))
                         }
                         inputStyle={{ width: "100%" }}
-                        enableSearch={true} // country search enable
+                        enableSearch={true}
                       />
                     </div>
 

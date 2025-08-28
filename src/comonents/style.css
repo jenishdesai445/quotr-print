@@ -339,6 +339,44 @@
   }
 }
 
+.custom-height {
+  height: 70vh;
+}
+
+@media (min-width: 768px) and (max-width: 768px) {
+  .custom-height {
+    height: 50vh;
+  }
+}
+/* Phone input ka style same as form__field */
+.phone-input-field {
+  width: 100% !important;
+  height: 50px !important;
+  border: none !important;
+  border-bottom: 1px solid #302f2f !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  font-size: 16px !important;
+  color: #000 !important;
+  padding-left: 48px !important; /* flag ke liye space */
+
+}
+.react-tel-input .form-control {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.phone-input-field:focus {
+  border-bottom: 2  px solid #0d6efd !important;
+  outline: none !important;
+}
+
+.phone-input-btn {
+  border: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
 .nav-link {
   text-decoration: none;
   color: white;

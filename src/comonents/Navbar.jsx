@@ -204,6 +204,23 @@ const Navbar = () => {
               </p>
 
               {token ? (
+                //                 <>
+                //   <div className="d-flex align-items-center justify-content-center gap-2">
+                //     <p className="display-6 m-0">
+                //       <FaStore />
+                //     </p>
+
+                //     <button
+                //       type="button"
+                //       className="btn btn-dark menu-btn fw-bold"
+                //       data-bs-dismiss="offcanvas"
+                //       aria-label="Close"
+                //       onClick={logout}
+                //     >
+                //       Log-Out
+                //     </button>
+                //   </div>
+                // </>
                 <button
                   type="button"
                   class="btn btn-dark menu-btn fw-bold"
