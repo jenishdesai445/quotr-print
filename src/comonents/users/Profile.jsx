@@ -7,6 +7,8 @@ import "../style.css";
 import { Helmet } from "react-helmet";
 import { useLoading } from "../LoadingContext ";
 import Swal from "sweetalert2";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const API_key = `AIzaSyAvzHK00m3gO1-hBanLOTHn9wNE_BUgdMw`;
 
@@ -335,13 +337,19 @@ const Profile = () => {
                       <label className="form-label fw-semibold">
                         Phone <span className="text-danger">*</span>
                       </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="phone"
-                        value={updatedProfile.phone || ""}
-                        onChange={handleChange}
-                        placeholder="Enter phone number"
+
+                      <PhoneInput
+                        country={"in"} // default India
+                        value={updatedProfile?.phone || ""}
+                        onChange={(phone, country) =>
+                          setUpdatedProfile((prev) => ({
+                            ...prev,
+                            phone: phone, // full phone with country code
+                            countryCode: country.dialCode, // optional agar store karna chaho
+                          }))
+                        }
+                        inputStyle={{ width: "100%" }}
+                        enableSearch={true} // country search enable
                       />
                     </div>
 
@@ -376,38 +384,42 @@ const Profile = () => {
                     </div>
 
                     {/* Address full row */}
-                    <p
-                      className="form-label fw-semibold"
-                      style={{ marginBottom: "2px" }}
-                    >
-                      Full Address
-                    </p>
-
-                    <p
-                      className="text-secondary"
-                      style={{ fontSize: "12px", marginBottom: "4px" }}
-                    >
-                      (Address, City, State, Zip)
-                    </p>
-
-                    <div className="input-group mt-1">
-                      <input
-                        className={`form-control ${
-                          errors.address ? "is-invalid" : ""
-                        }`}
-                        type="text"
-                        name="address"
-                        placeholder="Location"
-                        value={updatedProfile.address || ""}
-                        onChange={handleChange}
-                      />
-                      <span
-                        className="input-group-text"
-                        style={{ cursor: "pointer" }}
-                        onClick={searchCity}
+                    <div className="col-12">
+                      <label className="form-label fw-semibold">
+                        Full Address
+                      </label>
+                      <p
+                        className="text-secondary mb-2"
+                        style={{ fontSize: "12px" }}
                       >
-                        <i className="bi bi-search"></i>
-                      </span>
+                        (Address, City, State, Zip)
+                      </p>
+
+                      <div className="input-group">
+                        <input
+                          className={`form-control ${
+                            errors.address ? "is-invalid" : ""
+                          }`}
+                          type="text"
+                          name="address"
+                          placeholder="Location"
+                          value={updatedProfile.address || ""}
+                          onChange={handleChange}
+                        />
+                        <span
+                          className="input-group-text"
+                          style={{ cursor: "pointer" }}
+                          onClick={searchCity}
+                        >
+                          <i className="bi bi-search"></i>
+                        </span>
+                      </div>
+
+                      {errors.address && (
+                        <div className="text-danger small mt-1">
+                          {errors.address}
+                        </div>
+                      )}
                     </div>
 
                     {errors.address && (

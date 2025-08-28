@@ -6,6 +6,8 @@ import "../style.css";
 import { Helmet } from "react-helmet";
 import { useLoading } from "../LoadingContext ";
 import Swal from "sweetalert2";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const MyStore = () => {
   const [errors, setErrors] = useState({});
@@ -295,17 +297,24 @@ const MyStore = () => {
                     </div>
 
                     {/* Phone */}
+
                     <div className="col-md-6">
                       <label className="form-label fw-semibold">
                         Phone <span className="text-danger">*</span>
                       </label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        name="phone"
-                        value={selectedStore.phone || ""}
-                        onChange={handleChange}
-                        placeholder="Enter phone number"
+
+                      <PhoneInput
+                        country={"us"} //
+                        value={selectedStore?.phone || ""}
+                        onChange={(phone, country) =>
+                          setSelectedStore((prev) => ({
+                            ...prev,
+                            phone: phone,
+                            countryCode: country.dialCode,
+                          }))
+                        }
+                        inputStyle={{ width: "100%" }}
+                        enableSearch={true}
                       />
                     </div>
 
