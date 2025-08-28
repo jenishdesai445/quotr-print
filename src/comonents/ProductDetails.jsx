@@ -409,304 +409,294 @@ const ProductDetails = () => {
                 Step 2 : Order Confirmation
               </div>
             </div>
+            <div style={{ display: step === "step1" ? "block" : "none" }}>
+              <div class="">
+                {/* <ProductAttribute/> */}
+                {productType == "Regular" ? (
+                  <ProductAttribute2
+                    key={productData?.attribute?.[0]}
+                    attrData={productData?.attribute?.[0]}
+                    productId={location?.state}
+                    getData={setSelectedAttributes}
+                  />
+                ) : (
+                  <div class="row">
+                    {showAttributes()}
 
-            {step == "step1" && (
-              <div>
-                <div class="">
-                  {/* <ProductAttribute/> */}
-                  {productType == "Regular" ? (
-                    <ProductAttribute2
-                      key={productData?.attribute?.[0]}
-                      attrData={productData?.attribute?.[0]}
-                      productId={location?.state}
-                      getData={setSelectedAttributes}
-                    />
-                  ) : (
-                    <div class="row">
-                      {showAttributes()}
-
-                      <div className="col-md-6">
-                        <div className="col-11 m-auto mt-3">
-                          <p className="fw-semibold">
-                            Quantity <span class="text-danger">*</span>
-                          </p>
-                          <input
-                            type="number"
-                            class="form-control"
-                            placeholder="Enter your Quantity "
-                            value={productQtyExp}
-                            onChange={(e) => setProductQtyExp(e.target.value)}
-                          />
-                        </div>
+                    <div className="col-md-6">
+                      <div className="col-11 m-auto mt-3">
+                        <p className="fw-semibold">
+                          Quantity <span class="text-danger">*</span>
+                        </p>
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Enter your Quantity "
+                          value={productQtyExp}
+                          onChange={(e) => setProductQtyExp(e.target.value)}
+                        />
                       </div>
                     </div>
-                  )}
+                  </div>
+                )}
 
-                  {productType == "Regular" && (
-                    <div class="p-3">
-                      <p class="fw-semibold">Run Size</p>
-                      <div class=" mt-2" style={{ overflowX: "auto" }}>
-                        <table class="table table-bordered border-primary table-hover  rounded-3">
-                          <thead class="table-primary">
-                            <tr>
-                              <th scope="col" class="text-nowrap ">
-                                Run Size
-                              </th>
-                              <th scope="col" class="text-nowrap ">
-                                Per Unit ($)
-                              </th>
-                              <th scope="col" class="text-nowrap ">
-                                Total Price ($)
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>{table(runSize)}</tbody>
-                        </table>
-                      </div>
+                {productType == "Regular" && (
+                  <div class="p-3">
+                    <p class="fw-semibold">Run Size</p>
+                    <div class=" mt-2" style={{ overflowX: "auto" }}>
+                      <table class="table table-bordered border-primary table-hover  rounded-3">
+                        <thead class="table-primary">
+                          <tr>
+                            <th scope="col" class="text-nowrap ">
+                              Run Size
+                            </th>
+                            <th scope="col" class="text-nowrap ">
+                              Per Unit ($)
+                            </th>
+                            <th scope="col" class="text-nowrap ">
+                              Total Price ($)
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>{table(runSize)}</tbody>
+                      </table>
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
+              </div>
 
-                <div class="p-3">
-                  <div class=" border " style={{ background: "#F4F4F4" }}>
-                    <div class="col-11 m-auto d-flex align-items-center justify-content-between my-3 fs-5">
-                      <p>Item Total: </p>
-                      <p>${pricePick?.markup_price}</p>
-                    </div>
+              <div class="p-3">
+                <div class=" border " style={{ background: "#F4F4F4" }}>
+                  <div class="col-11 m-auto d-flex align-items-center justify-content-between my-3 fs-5">
+                    <p>Item Total: </p>
+                    <p>${pricePick?.markup_price}</p>
+                  </div>
 
-                    {/* <div class='d-flex align-items-center justify-content-between fs-5 my-3'>
+                  {/* <div class='d-flex align-items-center justify-content-between fs-5 my-3'>
                     <p>Subtotal: </p>
                     <p>${pricePick?.markup_price}</p>
                   </div> */}
 
-                    <div class="text-center my-3">
-                      {pricePick && (
-                        <Link
-                          activeClass="active"
-                          to="productListDetails"
-                          spy={true}
-                          smooth={true}
-                          offset={-70}
-                          duration={500}
-                          style={{
-                            // textDecoration: "none",
-                            color: "black",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => setStep("step2")}
-                        >
-                          <button type="button" class="btn btn-primary col-11 ">
-                            Proceed to Checkout
-                          </button>
-                        </Link>
-                      )}
-                    </div>
+                  <div class="text-center my-3">
+                    {pricePick && (
+                      <Link
+                        activeClass="active"
+                        to="productListDetails"
+                        spy={true}
+                        smooth={true}
+                        offset={-70}
+                        duration={500}
+                        style={{
+                          // textDecoration: "none",
+                          color: "black",
+                          cursor: "pointer",
+                        }}
+                        onClick={() => setStep("step2")}
+                      >
+                        <button type="button" class="btn btn-primary col-11 ">
+                          Proceed to Checkout
+                        </button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>
-            )}
+            </div>
+            {/* )} */}
+            <div style={{ display: step === "step2" ? "block" : "none" }}>
+              <div
+                class=" text-start  mt-4"
+                style={{
+                  boxShadow: "0 -2px 5px -2px rgba(115,115,115,0.75)",
+                }}
+              >
+                <br />
+                <div class="col-11 m-auto">
+                  <p>Price Per Set</p>
+                  <p class="fs-3 text-primary fw-bold">
+                    ${pricePick?.markup_price}
+                  </p>
 
-            {step == "step2" && (
-              <div class="col-11 m-auto row ">
-                <div
-                  class=" text-start  mt-4"
-                  style={{
-                    boxShadow: "0 -2px 5px -2px rgba(115,115,115,0.75)",
-                  }}
-                >
-                  <br />
-                  <div class="col-11 m-auto">
-                    <p>Price Per Set</p>
-                    <p class="fs-3 text-primary fw-bold">
-                      ${pricePick?.markup_price}
-                    </p>
+                  <div class="mt-3">
+                    <label htmlFor="" class="fw-semibold">
+                      Project / Client Name <span class="text-danger">*</span>
+                    </label>
+                    <input
+                      type="type"
+                      class="form-control"
+                      placeholder="Type Here"
+                      name="name"
+                      onChange={fillPlaceOrder}
+                    />
+                  </div>
 
-                    <div class="mt-3">
-                      <label htmlFor="" class="fw-semibold">
-                        Project / Client Name <span class="text-danger">*</span>
-                      </label>
+                  <div className="mt-3">
+                    <label htmlFor="phone" className="fw-semibold">
+                      Mobile/Phone No. <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="phone"
+                      className="form-control"
+                      placeholder="Enter mobile no."
+                      name="phone"
+                      // maxLength="10"
+                      onInput={(e) => {
+                        // Only digits allowed
+                        e.target.value = e.target.value.replace(/[^0-9]/g, "");
+                      }}
+                      onChange={fillPlaceOrder}
+                    />
+                  </div>
+
+                  <div className="mt-3">
+                    <label htmlFor="email" className="fw-semibold">
+                      Email <span className="text-danger">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      className={`form-control ${
+                        emailError ? "is-invalid" : ""
+                      }`}
+                      placeholder="Type Here"
+                      name="email"
+                      required
+                      onChange={fillPlaceOrder}
+                    />
+                    {emailError && (
+                      <div className="text-danger small mt-1">{emailError}</div>
+                    )}
+                  </div>
+
+                  <div class="mt-3 d-flex gap-3 align-items-center">
+                    <label htmlFor="" class="fw-semibold">
+                      Need Delivery ?{" "}
+                    </label>
+                    <div
+                      class="d-flex gap-1"
+                      onClick={() => setShippmentNeed(true)}
+                      style={{ cursor: "pointer" }}
+                    >
                       <input
-                        type="type"
-                        class="form-control"
-                        placeholder="Type Here"
-                        name="name"
-                        onChange={fillPlaceOrder}
+                        class="form-check-input"
+                        type="radio"
+                        checked={shippmentNeed}
                       />
+                      <p>Yes</p>
                     </div>
-
+                    <div
+                      class="d-flex gap-1"
+                      onClick={() => setShippmentNeed(false)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <input
+                        class="form-check-input"
+                        type="radio"
+                        checked={!shippmentNeed}
+                      />
+                      <p>No</p>
+                    </div>
+                  </div>
+                  {shippmentNeed && (
                     <div className="mt-3">
-                      <label htmlFor="phone" className="fw-semibold">
-                        Mobile/Phone No. <span className="text-danger">*</span>
+                      {/* Delivery Address */}
+                      <label
+                        htmlFor="address"
+                        className="fw-semibold mb-2 d-block"
+                      >
+                        Delivery Address <span className="text-danger">*</span>
                       </label>
                       <input
                         type="text"
-                        id="phone"
-                        className="form-control"
-                        placeholder="Enter mobile no."
-                        name="phone"
-                        // maxLength="10"
-                        onInput={(e) => {
-                          // Only digits allowed
-                          e.target.value = e.target.value.replace(
-                            /[^0-9]/g,
-                            ""
-                          );
-                        }}
+                        id="address"
+                        className="form-control shadow-sm border rounded-3 px-3 py-2"
+                        placeholder="Enter your delivery address"
+                        name="address"
                         onChange={fillPlaceOrder}
                       />
                     </div>
+                  )}
 
-                    <div className="mt-3">
-                      <label htmlFor="email" className="fw-semibold">
-                        Email <span className="text-danger">*</span>
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        className={`form-control ${
-                          emailError ? "is-invalid" : ""
-                        }`}
-                        placeholder="Type Here"
-                        name="email"
-                        required
-                        onChange={fillPlaceOrder}
-                      />
-                      {emailError && (
-                        <div className="text-danger small mt-1">
-                          {emailError}
+                  {shippmentNeed && (
+                    <div className="border rounded-3 mt-4 shadow-sm overflow-hidden">
+                      {/* Header */}
+                      <div
+                        className="d-flex gap-2 align-items-center justify-content-between p-3 bg-light rounded-top"
+                        data-bs-toggle="collapse"
+                        href="#shippingMethod"
+                        role="button"
+                        aria-expanded="false"
+                        aria-controls="shippingMethod"
+                        style={{ cursor: "pointer" }}
+                      >
+                        <div>
+                          <p className="fw-semibold mb-1">
+                            Shipping Method{" "}
+                            <span className="text-danger">*</span>
+                          </p>
+                          <p className="text-secondary fw-semibold small mb-0">
+                            {!shippingMethod
+                              ? "Select your preferred method"
+                              : shippingMethod?.name}
+                          </p>
                         </div>
+                        <i className="bi bi-chevron-down fs-5 text-muted"></i>
+                      </div>
+
+                      {/* Collapse Content */}
+                      <div className="collapse" id="shippingMethod">
+                        <div className="p-3">
+                          {shippingList && shippingList.length > 0 ? (
+                            shippingList.map((el, i) => (
+                              <div
+                                key={i}
+                                className={`p-3 rounded-3 mb-2 border d-flex justify-content-between align-items-center ${
+                                  shippingMethod?.name === el?.name
+                                    ? "border-primary bg-primary bg-opacity-10"
+                                    : "border-light"
+                                }`}
+                                style={{
+                                  cursor: "pointer",
+                                  transition: "0.2s",
+                                }}
+                                onClick={() => {
+                                  setShippingMethod(el);
+
+                                  // Collapse close after selection
+                                  const collapseEl =
+                                    document.getElementById("shippingMethod");
+                                  const bsCollapse =
+                                    window.bootstrap.Collapse.getOrCreateInstance(
+                                      collapseEl
+                                    );
+                                  bsCollapse.hide();
+                                }}
+                              >
+                                <p className="mb-0 fw-semibold">{el?.name}</p>
+                                {shippingMethod?.name === el?.name && (
+                                  <i className="bi bi-check-circle-fill text-primary"></i>
+                                )}
+                              </div>
+                            ))
+                          ) : (
+                            <p className="text-muted">
+                              No shipping methods available
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Error */}
+                      {!shippingMethod && (
+                        <p className="text-danger px-3 pb-2 small">
+                          ** Please select a shipping method **
+                        </p>
                       )}
                     </div>
+                  )}
 
-                    <div class="mt-3 d-flex gap-3 align-items-center">
-                      <label htmlFor="" class="fw-semibold">
-                        Need Delivery ?{" "}
-                      </label>
-                      <div
-                        class="d-flex gap-1"
-                        onClick={() => setShippmentNeed(true)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          checked={shippmentNeed}
-                        />
-                        <p>Yes</p>
-                      </div>
-                      <div
-                        class="d-flex gap-1"
-                        onClick={() => setShippmentNeed(false)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          checked={!shippmentNeed}
-                        />
-                        <p>No</p>
-                      </div>
-                    </div>
-                    {shippmentNeed && (
-                      <div className="mt-3">
-                        {/* Delivery Address */}
-                        <label
-                          htmlFor="address"
-                          className="fw-semibold mb-2 d-block"
-                        >
-                          Delivery Address{" "}
-                          <span className="text-danger">*</span>
-                        </label>
-                        <input
-                          type="text"
-                          id="address"
-                          className="form-control shadow-sm border rounded-3 px-3 py-2"
-                          placeholder="Enter your delivery address"
-                          name="address"
-                          onChange={fillPlaceOrder}
-                        />
-                      </div>
-                    )}
-
-                    {shippmentNeed && (
-                      <div className="border rounded-3 mt-4 shadow-sm overflow-hidden">
-                        {/* Header */}
-                        <div
-                          className="d-flex gap-2 align-items-center justify-content-between p-3 bg-light rounded-top"
-                          data-bs-toggle="collapse"
-                          href="#shippingMethod"
-                          role="button"
-                          aria-expanded="false"
-                          aria-controls="shippingMethod"
-                          style={{ cursor: "pointer" }}
-                        >
-                          <div>
-                            <p className="fw-semibold mb-1">
-                              Shipping Method{" "}
-                              <span className="text-danger">*</span>
-                            </p>
-                            <p className="text-secondary fw-semibold small mb-0">
-                              {!shippingMethod
-                                ? "Select your preferred method"
-                                : shippingMethod?.name}
-                            </p>
-                          </div>
-                          <i className="bi bi-chevron-down fs-5 text-muted"></i>
-                        </div>
-
-                        {/* Collapse Content */}
-                        <div className="collapse" id="shippingMethod">
-                          <div className="p-3">
-                            {shippingList && shippingList.length > 0 ? (
-                              shippingList.map((el, i) => (
-                                <div
-                                  key={i}
-                                  className={`p-3 rounded-3 mb-2 border d-flex justify-content-between align-items-center ${
-                                    shippingMethod?.name === el?.name
-                                      ? "border-primary bg-primary bg-opacity-10"
-                                      : "border-light"
-                                  }`}
-                                  style={{
-                                    cursor: "pointer",
-                                    transition: "0.2s",
-                                  }}
-                                  onClick={() => {
-                                    setShippingMethod(el);
-
-                                    // Collapse close after selection
-                                    const collapseEl =
-                                      document.getElementById("shippingMethod");
-                                    const bsCollapse =
-                                      window.bootstrap.Collapse.getOrCreateInstance(
-                                        collapseEl
-                                      );
-                                    bsCollapse.hide();
-                                  }}
-                                >
-                                  <p className="mb-0 fw-semibold">{el?.name}</p>
-                                  {shippingMethod?.name === el?.name && (
-                                    <i className="bi bi-check-circle-fill text-primary"></i>
-                                  )}
-                                </div>
-                              ))
-                            ) : (
-                              <p className="text-muted">
-                                No shipping methods available
-                              </p>
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Error */}
-                        {!shippingMethod && (
-                          <p className="text-danger px-3 pb-2 small">
-                            ** Please select a shipping method **
-                          </p>
-                        )}
-                      </div>
-                    )}
-
-                    {/* <div class='mt-4'>
+                  {/* <div class='mt-4'>
                       <p class='fs-4 fw-bold'>Shipment 1</p>
                       <div class='mt-2'>
                         <label htmlFor="" class='fw-semibold' >Sets</label>
@@ -718,7 +708,7 @@ const ProductDetails = () => {
                       </div>
                     </div> */}
 
-                    {/* <div class='mt-4'>
+                  {/* <div class='mt-4'>
                       <p class='fs-4 fw-bold'>Ship To </p>
                       <div class='border p-3 mt-3'>
                         <p>Tapan Patel, 3616 FAR WEST BZVD, STE 117 AUSTIN, TX 78731 - 3198 United States 5123466245 The UPS Store</p>
@@ -729,7 +719,7 @@ const ProductDetails = () => {
                         <p class='fw-semibold'>Add new Address</p>
                       </div>
                     </div> */}
-                    {/*                     
+                  {/*                     
                     <hr />
 
                     <div class='mt-2'>
@@ -740,12 +730,12 @@ const ProductDetails = () => {
                       </div>
                     </div> */}
 
-                    <hr />
+                  <hr />
 
-                    {/* <button type="button" class="btn btn-dark rounded-1 mt-3  col-md-6 col-12">+ Add Another Shipment</button> */}
-                  </div>
+                  {/* <button type="button" class="btn btn-dark rounded-1 mt-3  col-md-6 col-12">+ Add Another Shipment</button> */}
                 </div>
-                {/* <div class='mt-3' style={{ background: '#F4F4F4' }}>
+              </div>
+              {/* <div class='mt-3' style={{ background: '#F4F4F4' }}>
 
                   <div class='col-11 mt-4 m-auto'>
                     <div style={{ height: '2px' }}></div>
@@ -840,81 +830,79 @@ const ProductDetails = () => {
 
                 </div> */}
 
-                <div class=" mt-2" style={{ background: "#F4F4F4" }}>
-                  <div class="col-11 mt-2 m-auto">
-                    <div style={{ height: "10px" }}></div>
-                    <div class="text-start">
-                      <p class="h4">Cost Summary</p>
+              <div class=" mt-2" style={{ background: "#F4F4F4" }}>
+                <div class="col-11 mt-2 m-auto">
+                  <div style={{ height: "10px" }}></div>
+                  <div class="text-start">
+                    <p class="h4">Cost Summary</p>
 
-                      <hr />
+                    <hr />
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                        <p>Subtotal :</p>
+                      </div>
+                      <div>
+                        <p>$ {placeOrder?.tot_amount}</p>
+                      </div>
+                    </div>
+                    {shippmentNeed && (
                       <div class="d-flex align-items-center justify-content-between">
                         <div>
-                          <p>Subtotal :</p>
+                          <p>Shipping & Processing :</p>
                         </div>
                         <div>
-                          <p>$ {placeOrder?.tot_amount}</p>
+                          <p>$ {shippingMethod?.price}</p>
                         </div>
                       </div>
-                      {shippmentNeed && (
-                        <div class="d-flex align-items-center justify-content-between">
-                          <div>
-                            <p>Shipping & Processing :</p>
-                          </div>
-                          <div>
-                            <p>$ {shippingMethod?.price}</p>
-                          </div>
-                        </div>
-                      )}
-                      <div class="d-flex align-items-center justify-content-between">
-                        <div>
-                          <p>Tax (8.25%) : </p>
-                        </div>
-                        <div>
-                          <p>$ {placeOrder?.tax_amount}</p>
-                        </div>
+                    )}
+                    <div class="d-flex align-items-center justify-content-between">
+                      <div>
+                        <p>Tax (8.25%) : </p>
                       </div>
-                      {/* <div class='d-flex align-items-center justify-content-between'>
+                      <div>
+                        <p>$ {placeOrder?.tax_amount}</p>
+                      </div>
+                    </div>
+                    {/* <div class='d-flex align-items-center justify-content-between'>
                         <div><p>Tax :</p></div>
                         <div><p>$ {placeOrder?.tax_amount}</p></div>
                       </div> */}
-                    </div>
-
-                    <div class="p-2 form-control   bg-secondary rounded-1 d-flex align-items-center justify-content-between mt-3 fw-semibold">
-                      <div>
-                        <p class="text-white">Total :</p>
-                      </div>
-                      <div>
-                        <p class="text-white">
-                          ${placeOrder?.grand_tot_amount}
-                        </p>
-                      </div>
-                    </div>
-                    <br />
                   </div>
+
+                  <div class="p-2 form-control   bg-secondary rounded-1 d-flex align-items-center justify-content-between mt-3 fw-semibold">
+                    <div>
+                      <p class="text-white">Total :</p>
+                    </div>
+                    <div>
+                      <p class="text-white">${placeOrder?.grand_tot_amount}</p>
+                    </div>
+                  </div>
+                  <br />
                 </div>
+              </div>
 
-                <div class="border   my-2">
-                  <div class="col-11 m-auto d-flex my-3 align-items-center justify-content-between">
-                    <div>
-                      <p class="text-secondry">Grand Total</p>
-                      <p class="text-danger h4">
-                        $ {placeOrder?.grand_tot_amount}
-                      </p>
-                    </div>
+              <div class="border   my-2">
+                <div class="col-11 m-auto d-flex my-3 align-items-center justify-content-between">
+                  <div>
+                    <p class="text-secondry">Grand Total</p>
+                    <p class="text-danger h4">
+                      $ {placeOrder?.grand_tot_amount}
+                    </p>
+                  </div>
 
-                    <div>
-                      <button
-                        type="button"
-                        class="btn btn-primary"
-                        onClick={confirmOrder}
-                      >
-                        Confirm Order
-                      </button>
-                    </div>
+                  <div>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      onClick={confirmOrder}
+                    >
+                      Confirm Order
+                    </button>
                   </div>
                 </div>
               </div>
-            )}
+            </div>
+            {/* )} */}
           </div>
         </div>
       </div>
