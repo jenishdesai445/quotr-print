@@ -346,7 +346,7 @@ const SignUp = () => {
     const adminData = {
       ...rest,
       password_confirmation: confirmPassword,
-      plan: selectedPlan ? selectedPlan.name : "",
+      plan: selectedPlan ? selectedPlan.id : "",
       price: selectedPlan ? selectedPlan.price : "",
     };
 
