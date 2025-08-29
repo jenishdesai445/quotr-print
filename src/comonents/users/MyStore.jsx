@@ -304,7 +304,7 @@ const MyStore = () => {
                       </label>
 
                       <PhoneInput
-                        country={"us"} //
+                        country={"us"}
                         value={selectedStore?.phone || ""}
                         onChange={(phone, country) =>
                           setSelectedStore((prev) => ({

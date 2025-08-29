@@ -83,7 +83,7 @@ const Contact = () => {
 
         <div
           class="row border border-3 border-primary rounded-4 p-0 m-0 mt-3"
-          style={{ overflow: "hidden" }}
+          // style={{ overflow: "hidden" }}
         >
           <div class="col-md-4" style={{ background: "#0D6EFD" }}>
             <div class="col-11 m-auto fs-5 contact-text fw-bold h-100 text-white ">
@@ -160,7 +160,7 @@ const Contact = () => {
               </label>
             </div>
 
-          {/* ✅ PhoneInput with same style */}
+            {/* ✅ PhoneInput with same style */}
             <div className="form__group field">
               <PhoneInput
                 country={"us"}

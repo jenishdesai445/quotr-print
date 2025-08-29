@@ -284,8 +284,8 @@ const ProductDetails = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 2000, // animation duration
-      once: false, // ek hi bar chale scroll pe
+      duration: 2000,
+      once: false,
     });
   }, []);
 
@@ -373,19 +373,24 @@ const ProductDetails = () => {
           </div>
 
           {/* <ProductDetailsCarousel data={productData?.images} /> */}
-          <div
-            class="col-xxl-11 col-xl-9 col-lg-11  col-md-6   m-auto  "
-            style={{ height: "100%" }}
-          >
+          <div class="col-12 col-sm-12 col-lg-11  m-auto  " style={{ height: "100%" }}>
             <img src={productData?.photo} width={"100%"} />
           </div>
+
+          {/* <div
+            class="col-xxl-11 col-xl-9 col-lg-11  m-auto "
+            style={{ height: "100%" }}
+          >
+            {" "}
+            <img src={productData?.photo} width={"100%"} />{" "}
+          </div> */}
         </div>
 
         <div class="col-lg-7 text-start  px-lg-3  p-0 ">
           <div class="productListDetails border border-primary rounded-3 p-2">
             <div class="d-flex rounded-3 " style={{ background: "#CFE2FF" }}>
               <div
-                class="productSteps rounded-start-3 "
+                class="productSteps rounded-start-3"
                 style={
                   step == "step1"
                     ? {
@@ -398,10 +403,10 @@ const ProductDetails = () => {
                 onClick={() => setStep("step1")}
               >
                 {" "}
-                <p style={{cursor:"pointer"}}> Step 1 : Product Option</p>
+                <p style={{ cursor: "pointer" }}> Step 1 : Product Option</p>
               </div>
               <div
-                class="productSteps rounded-end-3 "
+                class="productSteps rounded-end-3"
                 style={
                   step == "step2"
                     ? {

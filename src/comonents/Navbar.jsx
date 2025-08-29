@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 
 import "./style.css";
+import { FaStore } from "react-icons/fa";
 
 const Navbar = () => {
   let token = localStorage.getItem("quotrUserToken");
@@ -38,6 +39,7 @@ const Navbar = () => {
               // >
               //   Dashboard
               // </p>
+
               <NavLink
                 to="/dashboard"
                 className={({ isActive }) =>
@@ -130,17 +132,27 @@ const Navbar = () => {
 
           {/* <button type="button" class="btn btn-light rounded-5 fw-bold">Log-Out</button> */}
 
-          <div class="mobileNav">
-            <p
-              class="fs-2 fw-bold"
+          <div className="mobileNav d-flex justify-content-between align-items-center gap-4 px-2">
+            {token && (
+              <span
+                className="fs-2 fw-bold m-0 mobile-only"
+                style={{ cursor: "pointer", lineHeight: "1" }}
+                onClick={() => navigate("/my-store")}
+              >
+                <FaStore />
+              </span>
+            )}
+
+            <span
+              className="fs-2 fw-bold m-0 mobile-only"
+              style={{ lineHeight: "1" }}
               type="button"
               data-bs-toggle="offcanvas"
               data-bs-target="#quotrNav"
               aria-controls="quotrNav"
             >
-              {" "}
-              <i class="bi bi-list"></i>
-            </p>
+              <i className="bi bi-list"></i>
+            </span>
           </div>
         </div>
         <div
@@ -154,7 +166,7 @@ const Navbar = () => {
             <img
               src={require("../images/footerLogo.png")}
               style={{ height: "40px" }}
-              alt=""
+              alt="Image Not Found"
             />
             <button
               type="button"

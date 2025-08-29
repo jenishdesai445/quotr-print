@@ -87,17 +87,17 @@ const ProductList = () => {
         <p class="text-secondary mt-2">{productDetails?.description} </p>
       </div>
 
-      <div class="col-md-8 m-auto row mt-5 ">
+      <div className="col-md-8 m-auto row mt-5">
         {categoryData?.map?.((el) => {
           return (
-            <div class="col-lg-4 col-12 m-auto my-3 ">
+            <div className="col-lg-6 col-md-6 col-12 my-3">
               <Link
                 to="/product-details"
                 state={el.id}
                 style={{ textDecoration: "none", color: "black" }}
               >
                 <div
-                  class="m-auto col-sm-10 "
+                  className="m-auto col-sm-10"
                   style={{
                     height: "280px",
                     borderRadius: "25px",
@@ -106,7 +106,7 @@ const ProductList = () => {
                   }}
                 >
                   <div
-                    class="col-12 d-flex align-items-center"
+                    className="col-12 d-flex align-items-center"
                     style={{
                       height: "200px",
                       borderRadius: "25px 25px 0 0",
@@ -119,15 +119,15 @@ const ProductList = () => {
                     <div className="col-8 m-auto h-100 d-flex align-items-center justify-content-center">
                       <img
                         src={el.photo}
-                        class="img-fluid p-1"
+                        className="img-fluid p-1"
                         style={{ maxHeight: "180px" }}
                         alt=""
                       />
                     </div>
                   </div>
-                  <div class="h-100 text-center">
-                    <h5 class=" py-3 fw-semibold">{el.name}</h5>
-                    <p class="fs-14 py-2 text-secondary">{el.text}</p>
+                  <div className="h-100 text-center">
+                    <h5 className="py-3 fw-semibold">{el.name}</h5>
+                    <p className="fs-14 py-2 text-secondary">{el.text}</p>
                   </div>
                 </div>
               </Link>

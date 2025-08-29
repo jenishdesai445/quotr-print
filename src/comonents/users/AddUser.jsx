@@ -318,7 +318,15 @@ const AddUser = () => {
 
           errorMessage = Object.values(serverErrors).flat().join(", ");
         } else if (err?.response?.data?.message) {
-          errorMessage = err.response.data.message;
+          if (err?.response?.data?.message) {
+            const serverMessage = err.response.data.message;
+            if (typeof serverMessage === "object") {
+              errorMessage = Object.values(serverMessage).flat().join(", ");
+              setErrors((prev) => ({ ...prev, ...serverMessage }));
+            } else {
+              errorMessage = serverMessage;
+            }
+          }
         }
 
         Swal.fire({
@@ -366,9 +374,14 @@ const AddUser = () => {
           setErrors((prev) => ({ ...prev, email: "" }));
         } else {
           Swal.fire({
-            text: res?.data?.message,
-            icon: "error",
+            title: "Already Registered",
+            text: "Your email is already verified.",
+            icon: "info",
             confirmButtonText: "ok",
+          }).then(() => {
+            setOtpVerified(true);
+            setEmailVerified(true);
+            setShowAllFields(true);
           });
           setIsLoading(false);
         }

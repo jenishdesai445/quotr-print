@@ -226,7 +226,7 @@
   justify-content: center;
 }
 
-@media (max-width: 990px) {
+@media (max-width: 769px) {
   .pcNav {
     display: none;
   }
@@ -359,7 +359,6 @@
   font-size: 16px !important;
   color: #000 !important;
   padding-left: 48px !important; /* flag ke liye space */
-
 }
 .react-tel-input .form-control {
   box-shadow: none !important;
@@ -367,7 +366,7 @@
 }
 
 .phone-input-field:focus {
-  border-bottom: 2  px solid #0d6efd !important;
+  border-bottom: 2 px solid #0d6efd !important;
   outline: none !important;
 }
 
@@ -438,6 +437,8 @@
   }
 }
 
+
+
 /* // My Store  */
 .hover-card {
   transition: all 0.3s ease;
@@ -494,4 +495,17 @@
 /* jab collapse open ho (aria-expanded=true) to icon rotate */
 .productDetailCollap[aria-expanded="true"] .faq-icon {
   transform: rotate(180deg);
+}
+
+/* default: show */
+.mobile-only {
+  display: block !important;
+}
+
+
+/* hide from 769px and up */
+@media (min-width: 769px) {
+  .mobile-only {
+    display: none !important;
+  }
 }
