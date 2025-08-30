@@ -349,7 +349,7 @@ const MyStore = () => {
                     </div>
 
                     {/* Address full row */}
-                    <p className="mt-2">Full Address</p>
+                    {/* <p className="mt-2">Full Address</p>
                     <p className="text-secondary" style={{ fontSize: "12px" }}>
                       (Address, City, State, Zip)
                     </p>
@@ -372,8 +372,45 @@ const MyStore = () => {
                       >
                         <i className="bi bi-search"></i>
                       </span>
-                    </div>
+                    </div> */}
 
+                    <div className="col-12">
+                      <label className="form-label fw-semibold">
+                        Full Address
+                      </label>
+                      <p
+                        className="text-secondary mb-2"
+                        style={{ fontSize: "12px" }}
+                      >
+                        (Address, City, State, Zip)
+                      </p>
+
+                      <div className="input-group">
+                        <input
+                          className={`form-control ${
+                            errors.address ? "is-invalid" : ""
+                          }`}
+                          type="text"
+                          name="address"
+                          placeholder="Location"
+                          value={selectedStore.address || ""}
+                          onChange={handleChange}
+                        />
+                        <span
+                          className="input-group-text"
+                          style={{ cursor: "pointer" }}
+                          onClick={searchCity}
+                        >
+                          <i className="bi bi-search"></i>
+                        </span>
+                      </div>
+
+                      {errors.address && (
+                        <div className="text-danger small mt-1">
+                          {errors.address}
+                        </div>
+                      )}
+                    </div>
                     {errors.address && (
                       <div className="text-danger small">{errors.address}</div>
                     )}

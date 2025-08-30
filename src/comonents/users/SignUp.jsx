@@ -330,7 +330,7 @@ const SignUp = () => {
       newErrors.address = "Please select a valid address";
     if (!tc) newErrors.tc = "You must agree to the terms and conditions";
     if (!emailVerified) newErrors.email = "Email must be verified";
-    if (!formData.plan) newErrors.plan = "Please select a subscription plan"; // Plan validation
+    if (!formData.plan) newErrors.plan = "Please select a subscription plan"; 
     const passwordValidation = validatePassword(formData.password || "");
     if (!Object.values(passwordValidation).every(Boolean))
       newErrors.password = "Password does not meet requirements";

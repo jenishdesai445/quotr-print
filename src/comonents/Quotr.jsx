@@ -191,14 +191,14 @@ const Quotr = () => {
             ref={hidemobileRef}
             data-aos="zoom-in"
           >
-            <p class="display-1 fw-bold">
+            <p class="display-1    fw-bold">
               Introducing <span style={{ color: "#0094DE" }}>Quotr</span>{" "}
             </p>
             <p class="fs-1 fw-bold">
               Empower Your Customers with Instant Print Pricing
             </p>
-            {/* <p class='display-3 fw-bold'><span style={{ color: '#0094DE' }}>Quotr App</span> for Printing Shop</p> */}
-            <p class="fw-semibold fs-4 mt-3 col-10 m-auto">
+
+            <p class="fw-semibold fs-4  mt-3 col-10 m-auto">
               Transforming Print Sales Behind the Counter. Quote Faster, Sell
               More
             </p>

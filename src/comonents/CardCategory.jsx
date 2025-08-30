@@ -139,7 +139,8 @@ const CardCategory = () => {
       </div>
 
       <div className="mt-3">
-        <div className="col-md-8 m-auto row mt-5">
+        {/* <div className="col-md-8 m-auto row mt-5"> */}
+        <div className="col-12 col-lg-8 m-auto row mt-5">
           {filterCatData?.map?.((el) => {
             return (
               <div

@@ -44,7 +44,6 @@ const Dashboard = () => {
         setData(res?.data?.data);
         setIsLoading(false);
       })
-
       .catch((err) => {
         setIsLoading(false);
         Swal.fire({
@@ -307,7 +306,7 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <div class="col-lg-3 col-md-4 col-sm-6 mt-4 ">
+        {/* <div class="col-lg-3 col-md-4 col-sm-6 mt-4 ">
           <div class="col-11 mx-auto border rounded-4 p-2 h-100 dashboardCart">
             <div class="m-auto text-center mt-2">
               <p class="display-2 fw-bold">
@@ -321,7 +320,7 @@ const Dashboard = () => {
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {data?.cust_type === "Store Owner" && (
           <div class="col-lg-3 col-md-4 col-sm-6 mt-4 myStore ">

@@ -87,7 +87,8 @@ const ProductList = () => {
         <p class="text-secondary mt-2">{productDetails?.description} </p>
       </div>
 
-      <div className="col-md-8 m-auto row mt-5">
+    <div className="col-12 col-lg-8 m-auto row mt-5">
+        {/* <div className="col-md-8 m-auto row mt-5"> */}
         {categoryData?.map?.((el) => {
           return (
             <div className="col-lg-6 col-md-6 col-12 my-3">
@@ -126,7 +127,9 @@ const ProductList = () => {
                     </div>
                   </div>
                   <div className="h-100 text-center">
-                    <h5 className="py-3 fw-semibold">{el.name}</h5>
+                    <h5 className="py-3 fw-semibold">
+                      {el.name}
+                    </h5>
                     <p className="fs-14 py-2 text-secondary">{el.text}</p>
                   </div>
                 </div>

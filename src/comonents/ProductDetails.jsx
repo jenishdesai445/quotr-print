@@ -373,7 +373,10 @@ const ProductDetails = () => {
           </div>
 
           {/* <ProductDetailsCarousel data={productData?.images} /> */}
-          <div class="col-12 col-sm-12 col-lg-11  m-auto  " style={{ height: "100%" }}>
+          <div
+            class="col-12 col-sm-12 col-lg-11  m-auto  "
+            style={{ height: "100%" }}
+          >
             <img src={productData?.photo} width={"100%"} />
           </div>
 

@@ -437,8 +437,6 @@
   }
 }
 
-
-
 /* // My Store  */
 .hover-card {
   transition: all 0.3s ease;
@@ -477,6 +475,22 @@
   color: #007bff;
 }
 
+@media (max-width: 768px) {
+  .display-1 {
+    font-size: 2.5rem;
+  }
+}
+@media (max-width: 768px) {
+  .fs-1 {
+    font-size: 1.75rem !important;
+  }
+}
+@media (max-width: 768px) {
+  .fs-4 {
+    font-size: 1.25rem !important;
+  }
+}
+
 /* Button inside offcanvas */
 .menu-btn {
   padding: 12px 20px;
@@ -484,7 +498,7 @@
   border-radius: 30px;
   font-size: 16px;
   transition: all 0.3s ease;
-  width: 100%; /* 👈 button bhi full width */
+  width: 100%; 
 }
 
 .menu-btn:hover {
@@ -492,7 +506,7 @@
   transform: translateY(-2px);
 }
 
-/* jab collapse open ho (aria-expanded=true) to icon rotate */
+
 .productDetailCollap[aria-expanded="true"] .faq-icon {
   transform: rotate(180deg);
 }
@@ -502,10 +516,11 @@
   display: block !important;
 }
 
-
 /* hide from 769px and up */
 @media (min-width: 769px) {
   .mobile-only {
     display: none !important;
   }
 }
+
+
